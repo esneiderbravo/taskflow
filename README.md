@@ -1,19 +1,35 @@
 # TaskFlow
 
-A lightweight, full-stack project and task management application built for the **PyCon 2026** workshop — *Beyond Vibe Coding: Spec-Driven Development with Code Graphs*.
+A lightweight, full-stack project and task management application built for the **PyCon 2026** workshop: *Beyond Vibe Coding: Spec-Driven Development with Code Graphs*.
 
-TaskFlow provides a practical sandbox to explore modern development workflows: manage projects and tasks through a clean web UI, interact with a REST API, and iterate on features in a containerized environment. The entire stack runs with a single command — no local runtime setup required.
+TaskFlow is a hands-on sandbox for modern development workflows. Organize work into projects, track tasks from ready to done, explore a REST API, and practice spec-driven iteration in an environment that mirrors real production stacks.
 
-**Stack:** Next.js · FastAPI · PostgreSQL · Docker
+**Stack:** Next.js · FastAPI · PostgreSQL · Alembic · Docker · Miniconda
 
-## 📋 Prerequisites
+---
+
+## Choose your setup
+
+| | 🐳 Docker | 💻 Local development |
+| --- | --- | --- |
+| **Best for** | Workshops, demos, zero local setup | Day-to-day coding with hot reload |
+| **Runs in Docker** | Database, API, frontend | Database only |
+| **Runs on your machine** | Nothing | API (conda) + frontend (Node.js) |
+| **Start command** | `make up` | `make dev` |
+| **See changes** | Rebuild with `make up` | Save file and refresh |
+
+---
+
+# 🐳 Docker setup
+
+Run the entire stack in containers. No Python, Node.js, or conda required on your machine.
+
+## Prerequisites
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Git](https://git-scm.com/)
 
-
-
-## 🚀 Getting Started
+## Quick start
 
 ```bash
 git clone https://github.com/esneiderbravo/taskflow.git
@@ -27,90 +43,169 @@ In Docker Desktop, you should see three running containers under the **taskflow*
 
 ![Docker containers after make up](docs/docker_containers.png)
 
-| Service      | URL                                                      |
-| ------------ | -------------------------------------------------------- |
-| 🖥️ Frontend | [http://localhost:3000](http://localhost:3000)           |
-| 📖 API docs  | [http://localhost:8000/docs](http://localhost:8000/docs) |
+## Service URLs
 
-
-Verify the backend is healthy:
+| Service | URL |
+| ------- | --- |
+| 🖥️ Frontend | [http://localhost:3000](http://localhost:3000) |
+| 📖 API docs | [http://localhost:8000/docs](http://localhost:8000/docs) |
+| ❤️ Health check | [http://localhost:8000/health](http://localhost:8000/health) |
 
 ```bash
 curl http://localhost:8000/health
 # {"status":"ok"}
 ```
 
-Stop the application:
+## Daily commands
 
 ```bash
-make down
+make up      # build and start all services
+make down    # stop all services
+make logs    # follow container output
+make test    # run backend and frontend tests
 ```
 
-Follow container logs:
+## Seeing your changes (Docker)
+
+Edits are **not** picked up automatically. The stack uses production builds.
+
+1. ✏️ Save your changes under `frontend/` or `backend/`.
+2. 🔁 Rebuild and restart: `make up`
+3. ⏳ Check startup: `make logs` (look for `Application startup complete`)
+4. 🌐 Refresh [http://localhost:3000](http://localhost:3000)
+
+## Database migrations (Docker)
+
+Schema changes are managed with [Alembic](https://alembic.sqlalchemy.org/). Migration files live in `backend/alembic/versions/`.
 
 ```bash
-make logs
-```
-
-
-
-## 🔄 Seeing Your Changes
-
-The app runs entirely inside Docker with production builds. Edits are **not** picked up automatically — follow these steps after modifying files.
-
-### 1. Save your changes
-
-Edit any file under `frontend/` or `backend/`.
-
-### 2. Rebuild and restart the stack
-
-```bash
+# Create a migration (saved to your local files)
+make migrate-create MSG="describe your change"
 make up
-```
 
-Equivalent without `make` (e.g. Windows):
-
-```bash
-docker compose up --build -d
-```
-
-
-
-### 3. Wait for the backend to be healthy
-
-Migrations run on backend startup. Check progress:
-
-```bash
-make logs
-```
-
-Look for `Running database migrations...` and `Application startup complete`.
-
-### 4. Refresh the browser
-
-Open or reload [http://localhost:3000](http://localhost:3000) to see frontend changes.
-
-For API-only changes, use [http://localhost:8000/docs](http://localhost:8000/docs) or:
-
-```bash
-curl http://localhost:8000/health
-```
-
-
-
-### If you changed database models
-
-Create and apply a new migration before rebuilding:
-
-```bash
-docker compose exec backend alembic revision --autogenerate -m "describe your change"
+# Apply pending migrations on a running stack
 make migrate
-make up
-```
 
-To wipe the database and start fresh (schema + demo seed):
-
-```bash
+# Wipe database and start fresh (schema + demo seed)
 make reset
 ```
 
+## Docker command reference
+
+| Command | Description |
+| ------- | ----------- |
+| `make up` | Build and start all services |
+| `make down` | Stop all services |
+| `make logs` | Follow container logs |
+| `make migrate` | Apply pending migrations |
+| `make migrate-create MSG="..."` | Generate a new migration file |
+| `make reset` | Wipe database volume and restart |
+| `make test` | Run backend and frontend tests |
+
+---
+
+# 💻 Local development setup
+
+Run the API and frontend on your machine with hot reload. PostgreSQL always runs in Docker. Python dependencies are managed in a conda environment named **`task-flow`**.
+
+## Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/) (database only)
+- [Miniconda](https://www.anaconda.com/download/success) (Python 3.12)
+- [Node.js](https://nodejs.org/) (LTS)
+- [Git](https://git-scm.com/)
+
+Restart your terminal after installing Miniconda.
+
+## Quick start
+
+**macOS / Linux:**
+
+```bash
+git clone https://github.com/esneiderbravo/taskflow.git
+cd taskflow
+chmod +x scripts/setup-local.sh
+make dev-setup    # creates conda env "task-flow" + installs deps (first time only)
+make dev          # starts DB, migrates, API, and frontend
+```
+
+**Windows (PowerShell):**
+
+```powershell
+git clone https://github.com/esneiderbravo/taskflow.git
+cd taskflow
+.\scripts\setup-local.ps1
+.\scripts\dev-local.ps1
+```
+
+### What `make dev-setup` does
+
+1. 🐍 Creates the **`task-flow`** conda environment from `environment.yml`
+2. 📦 Installs backend packages with `pip install -e ./backend`
+3. 📦 Runs `npm install` in `frontend/`
+4. ⚙️ Copies `.env.example` to `.env` if missing
+
+### What `make dev` does
+
+1. 🗄️ Starts PostgreSQL in Docker (`db` container)
+2. 📜 Runs Alembic migrations
+3. ⚡ Starts the API with hot reload (conda env `task-flow`)
+4. 🖥️ Starts the Next.js dev server
+
+Press `Ctrl+C` to stop the API and frontend. The database container keeps running.
+
+## Service URLs
+
+| Service | URL |
+| ------- | --- |
+| 🖥️ Frontend | [http://localhost:3000](http://localhost:3000) |
+| 📖 API docs | [http://localhost:8000/docs](http://localhost:8000/docs) |
+| 🗄️ Database | `localhost:5432` (Docker container `db`) |
+
+## Seeing your changes (local)
+
+Save your changes and refresh the browser. The backend (`--reload`) and frontend (`next dev`) pick up changes automatically. No rebuild required.
+
+## Database migrations (local)
+
+```bash
+# Create a migration
+make dev-migrate-create MSG="describe your change"
+make dev-migrate
+
+# Reset database (schema + demo seed)
+make dev-reset
+```
+
+Restart `make dev-backend` if the API is already running.
+
+## Run services separately (optional)
+
+```bash
+make dev-db         # PostgreSQL only
+make dev-migrate    # migrations only
+make dev-backend    # API only (uses conda env task-flow)
+make dev-frontend   # frontend only
+make dev-test       # run tests
+```
+
+## Windows without Make
+
+```powershell
+.\scripts\setup-local.ps1   # first time: creates task-flow env
+.\scripts\dev-local.ps1     # start everything
+```
+
+## Local command reference
+
+| Command | Description |
+| ------- | ----------- |
+| `make dev-setup` | Create `task-flow` conda env and install dependencies |
+| `make dev` | Start DB, migrate, API, and frontend |
+| `make dev-db` | Start PostgreSQL in Docker only |
+| `make dev-migrate` | Apply pending migrations |
+| `make dev-migrate-create MSG="..."` | Generate a new migration file |
+| `make dev-backend` | Start API with hot reload |
+| `make dev-frontend` | Start Next.js dev server |
+| `make dev-test` | Run backend and frontend tests |
+| `make dev-reset` | Wipe database volume and re-run migrations |
