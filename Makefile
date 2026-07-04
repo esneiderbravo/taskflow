@@ -1,4 +1,4 @@
-.PHONY: up down build test logs seed reset
+.PHONY: up down build test logs reset migrate
 
 up:
 	docker compose up --build -d
@@ -16,10 +16,9 @@ test:
 logs:
 	docker compose logs -f
 
-seed:
-	docker compose exec backend python scripts/seed.py
+migrate:
+	docker compose exec backend alembic upgrade head
 
 reset:
 	docker compose down -v
-	rm -rf data/
 	docker compose up --build -d

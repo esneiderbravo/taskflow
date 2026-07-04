@@ -15,8 +15,7 @@ build/
 .env
 .env.local
 
-# Data & local indexes
-data/
+# Local indexes
 .codegraph/
 
 # IDE

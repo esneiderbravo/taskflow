@@ -4,7 +4,7 @@ A lightweight, full-stack project and task management application built for the 
 
 TaskFlow provides a practical sandbox to explore modern development workflows: manage projects and tasks through a clean web UI, interact with a REST API, and iterate on features in a containerized environment. The entire stack runs with a single command — no local runtime setup required.
 
-**Stack:** Next.js · FastAPI · SQLite · Docker
+**Stack:** Next.js · FastAPI · PostgreSQL · Docker
 
 ## 📋 Prerequisites
 

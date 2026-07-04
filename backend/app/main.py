@@ -1,3 +1,5 @@
+"""FastAPI application entry point."""
+
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -5,12 +7,18 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes import router
 from app.config import settings
-from app.database import create_db_and_tables
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    create_db_and_tables()
+    """Manage application startup and shutdown lifecycle.
+
+    Args:
+        app: FastAPI application instance.
+
+    Yields:
+        None: Control returns while the application is running.
+    """
     yield
 
 
@@ -33,5 +41,10 @@ app.include_router(router)
 
 
 @app.get("/health")
-def health():
+def health() -> dict[str, str]:
+    """Return API health status.
+
+    Returns:
+        dict[str, str]: Health payload with status key set to ``ok``.
+    """
     return {"status": "ok"}

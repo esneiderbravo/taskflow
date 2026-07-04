@@ -1,22 +1,24 @@
-from pathlib import Path
+"""SQLAlchemy engine and session factory."""
 
-from sqlmodel import Session, SQLModel, create_engine
+from collections.abc import Generator
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session, sessionmaker
 
 from app.config import settings
 
-connect_args = {"check_same_thread": False} if settings.database_url.startswith("sqlite") else {}
-
-if settings.database_url.startswith("sqlite"):
-    db_path = settings.database_url.replace("sqlite:///", "")
-    Path(db_path).parent.mkdir(parents=True, exist_ok=True)
-
-engine = create_engine(settings.database_url, connect_args=connect_args)
+engine = create_engine(settings.database_url)
+SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
 
-def create_db_and_tables() -> None:
-    SQLModel.metadata.create_all(engine)
+def get_db() -> Generator[Session, None, None]:
+    """Yield a database session and close it when the request finishes.
 
-
-def get_session():
-    with Session(engine) as session:
-        yield session
+    Yields:
+        Session: SQLAlchemy session bound to the configured engine.
+    """
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
