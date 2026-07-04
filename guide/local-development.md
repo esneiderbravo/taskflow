@@ -49,14 +49,19 @@ Save a file and refresh — no rebuild needed.
 
 ## Commands
 
-| Command | Description |
-| ------- | ----------- |
-| `make dev` | Setup (if needed), DB, migrate, API, frontend |
-| `make dev-db` | PostgreSQL only |
-| `make dev-migrate` | Apply migrations |
-| `make dev-migrate-create MSG="..."` | New migration file |
-| `make dev-backend` | API only |
-| `make dev-frontend` | Frontend only |
-| `make dev-test` | Run tests |
-| `make dev-reset` | Wipe DB and re-migrate |
-| `make down` | Stop Docker services |
+| Action | macOS / Linux | Windows (PowerShell) |
+| ------ | ------------- | -------------------- |
+| Start app | `make dev` | `.\scripts\dev-local.ps1` |
+| PostgreSQL only | `make dev-db` | `docker compose up db -d` |
+| Apply migrations | `make dev-migrate` | `cd backend; conda run -n task-flow alembic upgrade head` |
+| New migration | `make dev-migrate-create MSG="..."` | `cd backend; conda run -n task-flow alembic revision --autogenerate -m "..."` |
+| Run tests | `make dev-test` | See below |
+| Reset database | `make dev-reset` | `docker compose down -v; docker compose up db -d` then migrate |
+| Stop Docker | `make down` | `docker compose down` |
+
+**Windows — run tests:**
+
+```powershell
+cd backend; conda run -n task-flow pytest -v
+cd ..\frontend; npm test -- --run
+```
