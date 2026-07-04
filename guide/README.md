@@ -8,4 +8,4 @@
 | [User story](./user-story-task-dependencies.md) | Feature spec to attach in your AI prompt |
 | [Compare tracks](./compare.md) | Final step — diff vibe coding vs SDD |
 
-Other workshop track: `workshop/sdd` (spec-driven with [OpenSpec](https://github.com/Fission-AI/OpenSpec)).
+Other workshop track: `workshop/sdd` (spec-driven development).
