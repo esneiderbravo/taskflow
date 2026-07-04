@@ -25,22 +25,22 @@ export function ProjectForm({ onSubmit }: ProjectFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-3 rounded-xl border border-surface-border bg-surface-raised/50 p-4 sm:flex-row"
+      className="card flex flex-col gap-3 p-4 sm:flex-row sm:items-center"
     >
       <input
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        placeholder="Enter project name..."
+        placeholder="Project name"
         aria-label="Project name"
-        className="flex-1 rounded-lg border border-surface-border bg-surface px-4 py-2.5 text-white placeholder:text-slate-500 focus:border-accent focus:outline-none"
+        className="input-field flex-1"
       />
       <button
         type="submit"
         disabled={submitting || !name.trim()}
-        className="rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-surface transition hover:bg-accent-muted disabled:cursor-not-allowed disabled:opacity-50"
+        className="btn-primary shrink-0"
       >
-        {submitting ? "Creating…" : "Create Project"}
+        {submitting ? "Creating…" : "Create project"}
       </button>
     </form>
   );

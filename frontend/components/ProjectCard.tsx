@@ -10,18 +10,22 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Link
       href={`/projects/${project.id}`}
-      className="group flex items-start justify-between gap-4 rounded-xl border border-surface-border bg-surface-raised p-5 transition hover:border-accent/40 hover:bg-surface-raised/80 hover:shadow-lg hover:shadow-accent/5"
+      className="card-interactive group relative flex items-start justify-between gap-4 overflow-hidden p-5 pl-6"
     >
+      <span
+        className="absolute inset-y-0 left-0 w-1 bg-brass/60 transition group-hover:bg-brass"
+        aria-hidden="true"
+      />
       <div className="min-w-0">
-        <h2 className="text-lg font-semibold text-white group-hover:text-accent transition-colors">
+        <h2 className="font-display text-lg font-medium text-cream transition group-hover:text-brass-light">
           {project.name}
         </h2>
-        <p className="mt-2 text-sm text-slate-500">
+        <p className="mt-2 font-mono text-xs text-cream-faint">
           Created {formatDate(project.created_at)}
         </p>
       </div>
       <svg
-        className="mt-1 h-5 w-5 shrink-0 text-slate-600 transition group-hover:translate-x-0.5 group-hover:text-accent"
+        className="mt-0.5 h-4 w-4 shrink-0 text-cream-faint transition group-hover:translate-x-0.5 group-hover:text-brass"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"

@@ -9,9 +9,9 @@ describe("StatusBadge", () => {
     expect(screen.getByText("Ready")).toBeInTheDocument();
   });
 
-  it("renders In Progress for in_progress status", () => {
+  it("renders In progress for in_progress status", () => {
     render(<StatusBadge status="in_progress" />);
-    expect(screen.getByText("In Progress")).toBeInTheDocument();
+    expect(screen.getByText("In progress")).toBeInTheDocument();
   });
 });
 

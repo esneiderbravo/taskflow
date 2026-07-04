@@ -1,10 +1,25 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Fraunces, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 
-const inter = Inter({
+const fraunces = Fraunces({
   subsets: ["latin"],
+  variable: "--font-fraunces",
+  display: "swap",
+});
+
+const ibmPlex = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-ibm-plex",
+  display: "swap",
+});
+
+const ibmMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-ibm-mono",
   display: "swap",
 });
 
@@ -18,15 +33,19 @@ const API_DOCS_URL = `${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:800
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={inter.className}>
+    <html
+      lang="en"
+      className={`${fraunces.variable} ${ibmPlex.variable} ${ibmMono.variable}`}
+    >
       <body>
         <div className="flex min-h-screen flex-col">
-          <header className="sticky top-0 z-10 border-b border-surface-border/80 bg-surface/80 backdrop-blur-md">
-            <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-              <Link href="/" className="group flex items-center gap-2.5">
-                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent/10 ring-1 ring-accent/20">
+          <header className="sticky top-0 z-10 border-b border-surface-border/60 bg-ink/90 backdrop-blur-md">
+            <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-4">
+              <Link href="/" className="group flex items-center gap-3">
+                <span className="relative flex h-9 w-9 items-center justify-center">
+                  <span className="absolute inset-0 rounded-md border border-brass/30 bg-brass/10" />
                   <svg
-                    className="h-4 w-4 text-accent"
+                    className="relative h-4 w-4 text-brass"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -36,30 +55,30 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                      d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"
                     />
                   </svg>
                 </span>
-                <span className="text-lg font-semibold tracking-tight text-white">
-                  Task<span className="text-accent">Flow</span>
+                <span className="font-display text-xl font-semibold tracking-tight text-cream">
+                  Task<span className="text-brass">Flow</span>
                 </span>
               </Link>
-              <span className="hidden rounded-full border border-surface-border bg-surface-raised px-3 py-1 text-xs font-medium tracking-wide text-slate-400 sm:inline">
-                PyCon 2026 Workshop
+              <span className="hidden font-mono text-[10px] uppercase tracking-[0.15em] text-cream-faint sm:inline">
+                PyCon 2026
               </span>
             </div>
           </header>
 
-          <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-10">{children}</main>
+          <main className="mx-auto w-full max-w-4xl flex-1 px-6 py-12">{children}</main>
 
-          <footer className="border-t border-surface-border/60 bg-surface-raised/30">
-            <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4 text-xs text-slate-500">
-              <span>Spec-Driven Development with Code Graphs</span>
+          <footer className="border-t border-surface-border/40">
+            <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-5 font-mono text-[11px] text-cream-faint">
+              <span>Spec-Driven Development</span>
               <a
                 href={API_DOCS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="transition hover:text-accent"
+                className="transition hover:text-brass"
               >
                 API Docs →
               </a>

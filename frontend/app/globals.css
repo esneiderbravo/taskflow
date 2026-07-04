@@ -3,21 +3,61 @@
 @import "tailwindcss/utilities";
 
 body {
-  @apply bg-surface text-slate-200 antialiased;
+  @apply bg-ink font-sans text-cream antialiased;
   background-image:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(56, 189, 248, 0.08), transparent),
-    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(56, 189, 248, 0.04), transparent);
+    radial-gradient(circle at 1px 1px, rgba(237, 233, 227, 0.035) 1px, transparent 0);
+  background-size: 24px 24px;
 }
 
 @layer base {
   ::selection {
-    @apply bg-accent/30 text-white;
+    @apply bg-brass/30 text-cream;
   }
 
   input:focus-visible,
   select:focus-visible,
   button:focus-visible,
   a:focus-visible {
-    @apply outline-none ring-2 ring-accent/50 ring-offset-2 ring-offset-surface;
+    @apply outline-none ring-2 ring-brass/40 ring-offset-2 ring-offset-ink;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@layer components {
+  .section-label {
+    @apply font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cream-faint;
+  }
+
+  .card {
+    @apply rounded-lg border border-surface-border bg-surface-raised shadow-card;
+  }
+
+  .card-interactive {
+    @apply card transition duration-200 hover:border-brass/25 hover:bg-surface-hover hover:shadow-card-hover;
+  }
+
+  .input-field {
+    @apply w-full rounded-md border border-surface-border bg-ink px-4 py-2.5 font-sans text-cream placeholder:text-cream-faint transition focus:border-brass/50 focus:outline-none;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-md bg-brass px-5 py-2.5 font-sans text-sm font-semibold text-ink transition hover:bg-brass-light disabled:cursor-not-allowed disabled:opacity-40;
+  }
+
+  .page-title {
+    @apply font-display text-3xl font-semibold tracking-tight text-cream sm:text-4xl;
+  }
+
+  .page-lead {
+    @apply mt-3 max-w-lg text-base leading-relaxed text-cream-muted;
   }
 }

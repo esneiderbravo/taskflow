@@ -28,14 +28,14 @@ export function TaskForm({ onSubmit }: TaskFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 rounded-xl border border-surface-border bg-surface-raised/50 p-5">
+    <form onSubmit={handleSubmit} className="card space-y-3 p-5">
       <input
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Task title"
         aria-label="Task title"
-        className="w-full rounded-lg border border-surface-border bg-surface px-4 py-2.5 text-white placeholder:text-slate-500 focus:border-accent focus:outline-none"
+        className="input-field"
       />
       <input
         type="text"
@@ -43,15 +43,17 @@ export function TaskForm({ onSubmit }: TaskFormProps) {
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Description (optional)"
         aria-label="Task description"
-        className="w-full rounded-lg border border-surface-border bg-surface px-4 py-2.5 text-white placeholder:text-slate-500 focus:border-accent focus:outline-none"
+        className="input-field"
       />
-      <button
-        type="submit"
-        disabled={submitting || !title.trim()}
-        className="rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-surface transition hover:bg-accent-muted disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        {submitting ? "Adding…" : "Add Task"}
-      </button>
+      <div className="pt-1">
+        <button
+          type="submit"
+          disabled={submitting || !title.trim()}
+          className="btn-primary"
+        >
+          {submitting ? "Adding…" : "Add task"}
+        </button>
+      </div>
     </form>
   );
 }
@@ -76,24 +78,24 @@ export function TaskList({ tasks, onStatusChange }: TaskListProps) {
       {tasks.map((task) => (
         <li
           key={task.id}
-          className="flex items-start justify-between gap-4 rounded-xl border border-surface-border bg-surface-raised p-4 transition hover:border-surface-border/80"
+          className="card flex flex-col gap-4 p-4 transition hover:bg-surface-hover sm:flex-row sm:items-start sm:justify-between"
         >
           <div className="min-w-0 flex-1">
-            <h3 className="font-medium text-white">{task.title}</h3>
+            <h3 className="font-medium text-cream">{task.title}</h3>
             {task.description && (
-              <p className="mt-1 text-sm leading-relaxed text-slate-400">{task.description}</p>
+              <p className="mt-1.5 text-sm leading-relaxed text-cream-muted">{task.description}</p>
             )}
           </div>
-          <div className="flex shrink-0 items-center gap-3">
+          <div className="flex shrink-0 items-center gap-3 sm:pt-0.5">
             <StatusBadge status={task.status} />
             <select
               value={task.status}
               onChange={(e) => onStatusChange(task.id, e.target.value as TaskStatus)}
-              className="rounded-lg border border-surface-border bg-surface px-2.5 py-1.5 text-sm text-slate-300"
+              className="rounded-md border border-surface-border bg-ink px-2.5 py-1.5 font-mono text-xs text-cream-muted"
               aria-label={`Change status for ${task.title}`}
             >
               <option value="todo">Ready</option>
-              <option value="in_progress">In Progress</option>
+              <option value="in_progress">In progress</option>
               <option value="done">Done</option>
             </select>
           </div>

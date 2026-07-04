@@ -15,37 +15,41 @@ export default function DashboardPage() {
 
   if (error) {
     return (
-      <div className="rounded-xl border border-red-500/30 bg-red-500/5 p-6">
-        <h2 className="font-medium text-red-300">Unable to load projects</h2>
-        <p className="mt-1 text-sm text-red-400/80">{error}</p>
+      <div className="card border-coral/30 bg-coral/5 p-6 animate-fade-up">
+        <h2 className="font-medium text-coral">Unable to load projects</h2>
+        <p className="mt-2 text-sm text-cream-muted">{error}</p>
+        <p className="mt-3 font-mono text-xs text-cream-faint">
+          Check that the backend is running, then refresh the page.
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-10">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight text-white">Projects</h1>
-        <p className="mt-2 max-w-xl text-slate-400">
-          Organize work into projects and track tasks through each stage of completion.
+    <div className="space-y-12 animate-fade-up">
+      <header className="border-b border-surface-border pb-10">
+        <p className="section-label">Dashboard</p>
+        <h1 className="page-title mt-2">Projects</h1>
+        <p className="page-lead">
+          Group work into projects and move tasks from ready to done.
         </p>
-      </div>
+      </header>
 
       <section aria-labelledby="create-project-heading">
-        <h2 id="create-project-heading" className="mb-3 text-sm font-medium uppercase tracking-wider text-slate-500">
-          New Project
+        <h2 id="create-project-heading" className="section-label mb-4">
+          New project
         </h2>
         <ProjectForm onSubmit={async (name) => { await createProject(name); }} />
       </section>
 
       <section aria-labelledby="projects-heading">
-        <div className="mb-4 flex items-baseline justify-between">
-          <h2 id="projects-heading" className="text-sm font-medium uppercase tracking-wider text-slate-500">
-            All Projects
+        <div className="mb-5 flex items-baseline justify-between border-b border-surface-border/60 pb-3">
+          <h2 id="projects-heading" className="section-label">
+            All projects
           </h2>
           {projects.length > 0 && (
-            <span className="text-sm text-slate-500">
-              {projects.length} {projects.length === 1 ? "project" : "projects"}
+            <span className="font-mono text-xs text-cream-faint">
+              {projects.length} total
             </span>
           )}
         </div>
@@ -53,12 +57,18 @@ export default function DashboardPage() {
         {projects.length === 0 ? (
           <EmptyState
             title="No projects yet"
-            description="Create your first project above to start organizing tasks."
+            description="Name your first project above to start adding tasks."
           />
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2">
-            {projects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+          <div className="grid gap-3 sm:grid-cols-2">
+            {projects.map((project, index) => (
+              <div
+                key={project.id}
+                className="animate-fade-up"
+                style={{ animationDelay: `${index * 60}ms` }}
+              >
+                <ProjectCard project={project} />
+              </div>
             ))}
           </div>
         )}
