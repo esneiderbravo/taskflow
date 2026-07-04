@@ -14,8 +14,6 @@ make up
 
 First build ~90s. You should see three containers: `db`, `backend`, `frontend`.
 
-![Docker containers](../docs/docker_containers.png)
-
 ## URLs
 
 | Service | URL |
