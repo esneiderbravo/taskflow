@@ -15,6 +15,8 @@ git checkout workshop/sdd
 make dev
 npm install -g @fission-ai/openspec@latest
 openspec init
+npm install -g @colbymchenry/codegraph
+codegraph init
 ```
 
 **Windows (PowerShell)**
@@ -26,6 +28,8 @@ git checkout workshop/sdd
 .\scripts\dev-local.ps1
 npm install -g @fission-ai/openspec@latest
 openspec init
+npm install -g @colbymchenry/codegraph
+codegraph init
 ```
 
 Open [http://localhost:3000](http://localhost:3000) · API docs at [http://localhost:8000/docs](http://localhost:8000/docs)
