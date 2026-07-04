@@ -13,19 +13,19 @@ export function ProjectCard({ project }: ProjectCardProps) {
       className="card-interactive group relative flex items-start justify-between gap-4 overflow-hidden p-5 pl-6"
     >
       <span
-        className="absolute inset-y-0 left-0 w-1 bg-brass/60 transition group-hover:bg-brass"
+        className="absolute inset-y-0 left-0 w-1 rounded-l-xl bg-accent/50 transition group-hover:bg-accent"
         aria-hidden="true"
       />
       <div className="min-w-0">
-        <h2 className="font-display text-lg font-medium text-cream transition group-hover:text-brass-light">
+        <h2 className="font-display text-lg font-semibold text-foreground transition group-hover:text-accent">
           {project.name}
         </h2>
-        <p className="mt-2 font-mono text-xs text-cream-faint">
+        <p className="mt-2 font-mono text-xs text-foreground-faint">
           Created {formatDate(project.created_at)}
         </p>
       </div>
       <svg
-        className="mt-0.5 h-4 w-4 shrink-0 text-cream-faint transition group-hover:translate-x-0.5 group-hover:text-brass"
+        className="mt-0.5 h-4 w-4 shrink-0 text-foreground-faint transition group-hover:translate-x-0.5 group-hover:text-accent"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"

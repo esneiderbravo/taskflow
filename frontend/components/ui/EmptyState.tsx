@@ -5,10 +5,10 @@ interface EmptyStateProps {
 
 export function EmptyState({ title, description }: EmptyStateProps) {
   return (
-    <div className="rounded-lg border border-dashed border-surface-border bg-surface/50 px-6 py-14 text-center">
-      <div className="mx-auto mb-5 flex h-11 w-11 items-center justify-center rounded-md border border-surface-border bg-surface-raised">
+    <div className="rounded-xl border border-dashed border-surface-border bg-surface-raised px-6 py-14 text-center">
+      <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-page text-foreground-faint">
         <svg
-          className="h-5 w-5 text-cream-faint"
+          className="h-5 w-5"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -22,8 +22,8 @@ export function EmptyState({ title, description }: EmptyStateProps) {
           />
         </svg>
       </div>
-      <h3 className="font-display text-base font-medium text-cream">{title}</h3>
-      <p className="mx-auto mt-2 max-w-xs text-sm leading-relaxed text-cream-muted">{description}</p>
+      <h3 className="font-display text-base font-semibold text-foreground">{title}</h3>
+      <p className="mx-auto mt-2 max-w-xs text-sm leading-relaxed text-foreground-muted">{description}</p>
     </div>
   );
 }

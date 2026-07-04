@@ -78,12 +78,12 @@ export function TaskList({ tasks, onStatusChange }: TaskListProps) {
       {tasks.map((task) => (
         <li
           key={task.id}
-          className="card group flex flex-col gap-4 p-4 transition hover:border-brass/15 hover:bg-surface-hover sm:flex-row sm:items-start sm:justify-between"
+          className="card group flex flex-col gap-4 p-4 transition hover:border-accent/15 hover:bg-surface-hover sm:flex-row sm:items-start sm:justify-between"
         >
           <div className="min-w-0 flex-1">
-            <h3 className="font-medium text-cream">{task.title}</h3>
+            <h3 className="font-medium text-foreground">{task.title}</h3>
             {task.description && (
-              <p className="mt-1.5 text-sm leading-relaxed text-cream-muted">{task.description}</p>
+              <p className="mt-1.5 text-sm leading-relaxed text-foreground-muted">{task.description}</p>
             )}
           </div>
           <div className="flex shrink-0 items-center gap-3 sm:pt-0.5">

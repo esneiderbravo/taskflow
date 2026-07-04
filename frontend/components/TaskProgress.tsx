@@ -12,25 +12,25 @@ export function TaskProgress({ tasks }: TaskProgressProps) {
   const percent = total > 0 ? Math.round((done / total) * 100) : 0;
 
   const segments = [
-    { count: done, color: "bg-brass", label: "done" },
-    { count: inProgress, color: "bg-coral", label: "in progress" },
-    { count: todo, color: "bg-sage/60", label: "ready" },
+    { count: done, color: "bg-status-done", label: "done" },
+    { count: inProgress, color: "bg-status-active", label: "in progress" },
+    { count: todo, color: "bg-status-ready/40", label: "ready" },
   ];
 
   return (
     <div className="card p-6">
       <div className="flex items-end justify-between gap-4">
         <div>
-          <p className="section-label">Completion</p>
-          <p className="mt-2 font-display text-3xl font-semibold text-cream">
+          <p className="text-sm font-medium text-foreground-muted">Completion</p>
+          <p className="mt-1 font-display text-3xl font-semibold tabular-nums text-foreground">
             {done}
-            <span className="text-lg font-normal text-cream-faint"> / {total}</span>
+            <span className="text-lg font-normal text-foreground-faint"> / {total}</span>
           </p>
         </div>
-        <p className="font-mono text-2xl font-medium tabular-nums text-brass">{percent}%</p>
+        <p className="font-mono text-2xl font-semibold tabular-nums text-accent">{percent}%</p>
       </div>
 
-      <div className="mt-5 flex h-1.5 overflow-hidden rounded-full bg-ink gap-px">
+      <div className="mt-5 flex h-2 overflow-hidden rounded-full bg-surface-border gap-px">
         {total > 0 ? (
           segments.map(
             (seg) =>
@@ -48,18 +48,18 @@ export function TaskProgress({ tasks }: TaskProgressProps) {
       </div>
 
       {total > 0 && (
-        <dl className="mt-5 grid grid-cols-3 gap-4 border-t border-surface-border/60 pt-5">
+        <dl className="mt-5 grid grid-cols-3 gap-4 border-t border-surface-border pt-5">
           <div>
-            <dt className="font-mono text-[10px] uppercase tracking-wider text-cream-faint">Ready</dt>
-            <dd className="mt-1 font-mono text-sm text-sage">{todo}</dd>
+            <dt className="text-xs font-medium text-foreground-faint">Ready</dt>
+            <dd className="mt-1 font-mono text-sm font-medium text-status-ready">{todo}</dd>
           </div>
           <div>
-            <dt className="font-mono text-[10px] uppercase tracking-wider text-cream-faint">Active</dt>
-            <dd className="mt-1 font-mono text-sm text-coral">{inProgress}</dd>
+            <dt className="text-xs font-medium text-foreground-faint">Active</dt>
+            <dd className="mt-1 font-mono text-sm font-medium text-status-active">{inProgress}</dd>
           </div>
           <div>
-            <dt className="font-mono text-[10px] uppercase tracking-wider text-cream-faint">Done</dt>
-            <dd className="mt-1 font-mono text-sm text-brass">{done}</dd>
+            <dt className="text-xs font-medium text-foreground-faint">Done</dt>
+            <dd className="mt-1 font-mono text-sm font-medium text-status-done">{done}</dd>
           </div>
         </dl>
       )}
