@@ -30,7 +30,7 @@ Open [http://localhost:3000](http://localhost:3000) · API docs at [http://local
 
 Detailed setup and workflows live in **[guide/](guide/README.md)**:
 
-- [Local development](guide/local-development.md) — hot reload (`make dev`)
-- [Docker](guide/docker.md) — full stack (`make up`)
+- [Local development](guide/local-development.md) — hot reload
+- [Docker](guide/docker.md) — full stack in containers
 - [Vibe coding workshop](guide/workshop.md) — this track's workflow
 - [User story](guide/user-story-task-dependencies.md) — feature spec

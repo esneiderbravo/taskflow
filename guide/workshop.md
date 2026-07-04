@@ -4,9 +4,18 @@ Spec: [user-story-task-dependencies.md](./user-story-task-dependencies.md)
 
 ## Setup
 
+**macOS / Linux**
+
 ```bash
 git checkout workshop/vibe-coding
 make dev
+```
+
+**Windows (PowerShell)**
+
+```powershell
+git checkout workshop/vibe-coding
+.\scripts\dev-local.ps1
 ```
 
 ## Workflow
