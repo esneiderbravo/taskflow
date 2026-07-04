@@ -1,4 +1,4 @@
-# 📘 Vibe Coding Workshop
+# Vibe Coding Workshop
 
 Spec: [user-story-task-dependencies.md](./user-story-task-dependencies.md)
 
@@ -11,8 +11,8 @@ make dev
 
 ## Workflow
 
-Attach `docs/user-story-task-dependencies.md`, then:
+Attach `guide/user-story-task-dependencies.md`, then:
 
 ```
-Implement the feature described in docs/user-story-task-dependencies.md.
+Implement the feature described in guide/user-story-task-dependencies.md.
 ```
