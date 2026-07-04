@@ -1,25 +1,16 @@
-# Workshop specs
+# Workshop specs — Spec-driven (SDD) track
 
-Two tracks for the **Task Dependencies** feature. Same codebase, different level of specification.
+Implement the **Task Dependencies** feature from:
 
-| Track | Branch | Spec file | Approach |
-| ----- | ------ | --------- | -------- |
-| Vibe coding | `workshop/vibe-coding` | [user-story.md](./user-story.md) | Minimal story, figure out details while coding |
-| Spec-driven (SDD) | `workshop/sdd` | [user-story.md](./user-story.md) | Full spec before implementation |
+**[user-story-task-dependencies.md](./user-story-task-dependencies.md)**
 
-Reference copies (on `main`):
-
-- [user-story-simple.md](./user-story-simple.md) — vibe coding template
-- [user-story-enriched.md](./user-story-enriched.md) — SDD template
-
-## Checkout a track
+Full specification: data model, API contracts, business rules, UX, and test plan.
 
 ```bash
-# Vibe coding
-git checkout workshop/vibe-coding
-
-# Spec-driven development
 git checkout workshop/sdd
+make dev    # local hybrid
+# or
+make up     # full Docker
 ```
 
-Implement the feature on your branch. Compare results with the other track in the debrief.
+Compare your result with the **vibe coding** track (`workshop/vibe-coding`) in the debrief.
