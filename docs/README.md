@@ -2,24 +2,28 @@
 
 Two tracks for the **Task Dependencies** feature. Same codebase, different level of specification.
 
-| Track | Branch | Spec file | Approach |
-| ----- | ------ | --------- | -------- |
-| Vibe coding | `workshop/vibe-coding` | [user-story.md](./user-story.md) | Minimal story, figure out details while coding |
-| Spec-driven (SDD) | `workshop/sdd` | [user-story.md](./user-story.md) | Full spec before implementation |
+| Track | Branch | Spec file | Content |
+| ----- | ------ | --------- | ------- |
+| Vibe coding | `workshop/vibe-coding` | `docs/user-story-task-dependencies.md` | Simple (minimal) |
+| Spec-driven (SDD) | `workshop/sdd` | `docs/user-story-task-dependencies.md` | Enriched (full spec) |
 
-Reference copies (on `main`):
+Both branches use the same filename. The **content** differs by track.
 
-- [user-story-simple.md](./user-story-simple.md) — vibe coding template
-- [user-story-enriched.md](./user-story-enriched.md) — SDD template
+Reference templates (on `main`):
+
+- [user-story-simple.md](./user-story-simple.md) — vibe coding source
+- [user-story-enriched.md](./user-story-enriched.md) — SDD source
 
 ## Checkout a track
 
 ```bash
 # Vibe coding
 git checkout workshop/vibe-coding
+# Read docs/user-story-task-dependencies.md
 
 # Spec-driven development
 git checkout workshop/sdd
+# Read docs/user-story-task-dependencies.md
 ```
 
 Implement the feature on your branch. Compare results with the other track in the debrief.
