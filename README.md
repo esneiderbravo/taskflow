@@ -124,9 +124,8 @@ Restart your terminal after installing Miniconda.
 ```bash
 git clone https://github.com/esneiderbravo/taskflow.git
 cd taskflow
-chmod +x scripts/setup-local.sh
-make dev-setup    # creates conda env "task-flow" + installs deps (first time only)
-make dev          # starts DB, migrates, API, and frontend
+chmod +x scripts/dev-local.sh
+make dev
 ```
 
 **Windows (PowerShell):**
@@ -134,18 +133,18 @@ make dev          # starts DB, migrates, API, and frontend
 ```powershell
 git clone https://github.com/esneiderbravo/taskflow.git
 cd taskflow
-.\scripts\setup-local.ps1
 .\scripts\dev-local.ps1
 ```
 
-### What `make dev-setup` does
-
-1. 🐍 Creates the **`task-flow`** conda environment from `environment.yml`
-2. 📦 Installs backend packages with `pip install -e ./backend`
-3. 📦 Runs `npm install` in `frontend/`
-4. ⚙️ Copies `.env.example` to `.env` if missing
-
 ### What `make dev` does
+
+On first run it will:
+
+1. 🐍 Create the **`task-flow`** conda environment from `environment.yml`
+2. 📦 Install backend and frontend dependencies
+3. ⚙️ Copy `.env.example` to `.env` if missing
+
+Every run then:
 
 1. 🗄️ Starts PostgreSQL in Docker (`db` container)
 2. 📜 Runs Alembic migrations
@@ -192,16 +191,14 @@ make dev-test       # run tests
 ## Windows without Make
 
 ```powershell
-.\scripts\setup-local.ps1   # first time: creates task-flow env
-.\scripts\dev-local.ps1     # start everything
+.\scripts\dev-local.ps1
 ```
 
 ## Local command reference
 
 | Command | Description |
 | ------- | ----------- |
-| `make dev-setup` | Create `task-flow` conda env and install dependencies |
-| `make dev` | Start DB, migrate, API, and frontend |
+| `make dev` | Setup (if needed), start DB, migrate, API, and frontend |
 | `make dev-db` | Start PostgreSQL in Docker only |
 | `make dev-migrate` | Apply pending migrations |
 | `make dev-migrate-create MSG="..."` | Generate a new migration file |

@@ -1,5 +1,5 @@
 .PHONY: up down build test logs reset migrate migrate-create
-.PHONY: dev dev-setup dev-db dev-migrate dev-migrate-create dev-backend dev-frontend dev-test dev-reset
+.PHONY: dev dev-db dev-migrate dev-migrate-create dev-backend dev-frontend dev-test dev-reset
 
 CONDA_ENV ?= task-flow
 MSG ?=
@@ -40,9 +40,6 @@ reset:
 
 dev:
 	bash scripts/dev-local.sh
-
-dev-setup:
-	bash scripts/setup-local.sh
 
 dev-db:
 	docker compose up db -d

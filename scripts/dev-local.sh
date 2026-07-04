@@ -36,13 +36,20 @@ require_cmd node
 require_cmd npm
 
 if ! conda env list | awk '{print $1}' | grep -qx "$CONDA_ENV"; then
-  echo "Conda environment '$CONDA_ENV' not found. Run: make dev-setup"
-  exit 1
+  echo "Creating conda environment '$CONDA_ENV'..."
+  conda env create -f environment.yml
+else
+  echo "Conda environment '$CONDA_ENV' already exists."
 fi
 
+echo "Installing backend dependencies..."
+conda run -n "$CONDA_ENV" pip install -e ./backend
+
 if [ ! -d frontend/node_modules ]; then
-  echo "Frontend dependencies not installed. Run: make dev-setup"
-  exit 1
+  echo "Installing frontend dependencies..."
+  (cd frontend && npm install)
+else
+  echo "Frontend dependencies already installed."
 fi
 
 if [ ! -f .env ]; then

@@ -20,13 +20,22 @@ Require-Command npm
 
 $envExists = conda env list | Select-String -Pattern "^\s*$CondaEnv\s"
 if (-not $envExists) {
-  Write-Host "Conda environment '$CondaEnv' not found. Run: make dev-setup"
-  exit 1
+  Write-Host "Creating conda environment '$CondaEnv'..."
+  conda env create -f environment.yml
+} else {
+  Write-Host "Conda environment '$CondaEnv' already exists."
 }
 
+Write-Host "Installing backend dependencies..."
+conda run -n $CondaEnv pip install -e ./backend
+
 if (-not (Test-Path frontend/node_modules)) {
-  Write-Host "Frontend dependencies not installed. Run: make dev-setup"
-  exit 1
+  Write-Host "Installing frontend dependencies..."
+  Push-Location frontend
+  npm install
+  Pop-Location
+} else {
+  Write-Host "Frontend dependencies already installed."
 }
 
 if (-not (Test-Path .env)) {
