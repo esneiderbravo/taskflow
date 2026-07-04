@@ -17,6 +17,8 @@ build/
 
 # Local indexes
 .codegraph/
+.agents/
+skills-lock.json
 
 # IDE
 .idea/
