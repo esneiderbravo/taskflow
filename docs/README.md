@@ -1,12 +1,12 @@
-# Workshop specs — Vibe coding track
+# ⚡ Workshop — Vibe Coding
 
-**Start here:** [GUIDE.md](./GUIDE.md)
+**👉 Start here:** [GUIDE.md](./GUIDE.md)
 
-Implement the **Task Dependencies** feature from:
+Build the **Task Dependencies** feature from a minimal user story:
 
 **[user-story-task-dependencies.md](./user-story-task-dependencies.md)**
 
-Minimal user story. Use the prompt in the guide and build.
+Use the prompt in the guide and start building.
 
 ```bash
 git checkout workshop/vibe-coding
@@ -15,4 +15,4 @@ make dev    # local hybrid
 make up     # full Docker
 ```
 
-Compare your result with the **SDD** track (`workshop/sdd`) in the debrief.
+Compare your outcome with the **SDD** track (`workshop/sdd`) in the debrief.
