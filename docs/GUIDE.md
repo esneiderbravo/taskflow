@@ -1,12 +1,12 @@
-# Workshop Guide: Spec-Driven Development (SDD)
+# 📘 Workshop Guide: Spec-Driven Development (SDD)
 
-This track implements **Task Dependencies** using the full specification before writing code.
+This track builds **Task Dependencies** by reading the full specification first, then implementing layer by layer with clear acceptance criteria.
 
-**Spec:** [user-story-task-dependencies.md](./user-story-task-dependencies.md)
+**Specification:** [user-story-task-dependencies.md](./user-story-task-dependencies.md)
 
 ---
 
-## Before you start
+## 🚀 Before you start
 
 ```bash
 git checkout workshop/sdd
@@ -15,29 +15,29 @@ make dev    # recommended: hot reload
 make up     # full Docker
 ```
 
-Open the app at [http://localhost:3000](http://localhost:3000).
+Open the application at [http://localhost:3000](http://localhost:3000).
 
 ---
 
-## SDD workflow
+## 🧭 SDD workflow
 
-### Step 1: Read the spec end-to-end
+### Step 1: 📖 Read the spec end-to-end
 
-Read [user-story-task-dependencies.md](./user-story-task-dependencies.md) completely before opening the editor.
+Read [user-story-task-dependencies.md](./user-story-task-dependencies.md) in full before writing any code.
 
-Identify:
+Identify and be able to explain:
 
-- Data model (`TaskDependency`)
-- Business rules (no cycles, blocked vs ready)
-- API contracts (request/response shapes)
-- Frontend requirements (task detail + graph view)
-- Required tests
+- 🗄️ Data model (`TaskDependency`)
+- ⚖️ Business rules (no cycles, blocked vs ready)
+- 🔌 API contracts (request and response shapes)
+- 🖥️ Frontend requirements (task detail and graph view)
+- 🧪 Required tests
 
-Do **not** start coding until you can explain each section in your own words.
+Do not start implementation until each section is clear.
 
-### Step 2: Map the spec to the codebase
+### Step 2: 🗺️ Map the spec to the codebase
 
-Explore the existing layers:
+Review the existing architecture and list the files you expect to touch:
 
 | Layer | Location |
 | ----- | -------- |
@@ -50,36 +50,34 @@ Explore the existing layers:
 | Frontend | `frontend/app/`, `frontend/components/` |
 | Tests | `backend/app/tests/`, `frontend/tests/` |
 
-List every file you expect to create or modify.
-
-### Step 3: Database first
+### Step 3: 🗄️ Database first
 
 1. Add the `TaskDependency` SQLAlchemy model
-2. Generate a migration:
+2. Generate and apply a migration:
 
 ```bash
 make dev-migrate-create MSG="add task dependencies"
 make dev-migrate
 ```
 
-3. Verify the table exists before moving on
+3. Confirm the schema before continuing
 
-### Step 4: Business logic
+### Step 4: ⚙️ Business logic
 
 Implement in the manager layer:
 
-- Create dependency (validate same project, no self-link, no duplicates)
+- Create dependency (same project, no self-link, no duplicates)
 - **Cycle detection** before persisting
-- Blocked / ready state resolution
+- Blocked and ready state resolution
 - Delete dependency
 - Fetch depends-on and blocking lists
-- Build graph for a project
+- Build the project dependency graph
 
-Write manager tests or API tests as you go.
+Add tests as each rule is implemented.
 
-### Step 5: API layer
+### Step 5: 🔌 API layer
 
-Implement endpoints exactly as specified:
+Implement the endpoints defined in the specification:
 
 | Method | Path |
 | ------ | ---- |
@@ -88,15 +86,15 @@ Implement endpoints exactly as specified:
 | `GET` | `/tasks/{id}/dependencies` |
 | `GET` | `/projects/{id}/graph` |
 
-Match status codes and error cases from the spec (`400` for cycles, `404` for missing resources).
+Return the status codes and error cases documented in the spec (`400` for cycles, `404` for missing resources).
 
-### Step 6: Frontend
+### Step 6: 🖥️ Frontend
 
-1. **Task detail** — Depends on / Blocking sections + status indicators
-2. **Graph view** — project-level dependency tree
-3. Wire to the new API endpoints
+1. **Task detail** — Depends on / Blocking sections and status indicators
+2. **Graph view** — project-level dependency visualization
+3. Connect UI components to the new API endpoints
 
-### Step 7: Required tests
+### Step 7: 🧪 Required tests
 
 **Backend:**
 
@@ -107,35 +105,35 @@ Match status codes and error cases from the spec (`400` for cycles, `404` for mi
 
 **Frontend:**
 
-- Dependencies render
-- Blocked tasks display
-- Graph updates after create
+- Dependencies render correctly
+- Blocked tasks are displayed
+- Graph updates after creating a dependency
 
 ```bash
 make dev-test
 ```
 
-### Step 8: Definition of Done
+### Step 8: ✅ Definition of Done
 
-Check every item in the spec's **Definition of Done** section before stopping.
-
----
-
-## Tips for this track
-
-- Treat the spec as the source of truth. If something is ambiguous, make a deliberate choice and document it.
-- Implement one layer at a time. Do not skip migrations or tests.
-- Use the code graph (if available) to trace impact across layers before editing.
-- Compare your result with the **vibe coding** track in the debrief.
+Verify every item in the spec's **Definition of Done** section before considering the feature complete.
 
 ---
 
-## Quick reference
+## 💡 Tips for this track
+
+- Treat the specification as the single source of truth
+- Implement one layer at a time; avoid skipping migrations or tests
+- Use the code graph (if available) to understand cross-layer impact before editing
+- Compare outcomes with the **vibe coding** track during the debrief
+
+---
+
+## 📦 Quick reference
 
 | Action | Command |
 | ------ | ------- |
-| Start app | `make dev` |
-| New migration | `make dev-migrate-create MSG="..."` |
-| Apply migrations | `make dev-migrate` |
-| Run tests | `make dev-test` |
-| Reset database | `make dev-reset` |
+| 🚀 Start app | `make dev` |
+| 📝 New migration | `make dev-migrate-create MSG="..."` |
+| 📜 Apply migrations | `make dev-migrate` |
+| 🧪 Run tests | `make dev-test` |
+| 🔄 Reset database | `make dev-reset` |

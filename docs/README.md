@@ -1,12 +1,12 @@
-# Workshop specs — Spec-driven (SDD) track
+# 📋 Workshop — Spec-Driven Development (SDD)
 
-**Start here:** [GUIDE.md](./GUIDE.md)
+**👉 Start here:** [GUIDE.md](./GUIDE.md)
 
-Implement the **Task Dependencies** feature from:
+Build the **Task Dependencies** feature using the complete specification:
 
 **[user-story-task-dependencies.md](./user-story-task-dependencies.md)**
 
-Full specification: data model, API contracts, business rules, UX, and test plan.
+Covers data model, API contracts, business rules, user experience, and test plan.
 
 ```bash
 git checkout workshop/sdd
@@ -15,4 +15,4 @@ make dev    # local hybrid
 make up     # full Docker
 ```
 
-Compare your result with the **vibe coding** track (`workshop/vibe-coding`) in the debrief.
+Compare your outcome with the **vibe coding** track (`workshop/vibe-coding`) in the debrief.
