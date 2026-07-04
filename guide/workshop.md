@@ -1,4 +1,4 @@
-# 📘 SDD Workshop
+# SDD Workshop
 
 [OpenSpec](https://github.com/Fission-AI/OpenSpec) · Spec: [user-story-task-dependencies.md](./user-story-task-dependencies.md)
 
@@ -13,7 +13,7 @@ openspec init
 
 ## Workflow
 
-Attach `docs/user-story-task-dependencies.md` in each step.
+Attach `guide/user-story-task-dependencies.md` in each step.
 
 ```
 /opsx:propose task-dependencies
