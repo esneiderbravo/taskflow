@@ -7,7 +7,7 @@ Lightweight project and task management app for the **PyCon 2026** workshop: *Be
 Requirements: [Docker](https://docs.docker.com/get-docker/) and [Git](https://git-scm.com/).
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/esneiderbravo/taskflow.git
 cd taskflow
 docker compose up --build
 ```

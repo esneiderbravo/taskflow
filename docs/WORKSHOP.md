@@ -77,7 +77,7 @@ Participants do **not** need to run `openspec init` — the facilitator does tha
 ### Participant setup (Part 2)
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/esneiderbravo/taskflow.git
 cd taskflow
 git checkout workshop/sdd
 
@@ -365,7 +365,7 @@ codegraph explore "TaskService"
 - [ ] Docker Desktop installed and running
 - [ ] Cursor installed
 - [ ] Node.js 20.19+ installed
-- [ ] Repo cloned: `git clone <repo-url>`
+- [ ] Repo cloned: `git clone https://github.com/esneiderbravo/taskflow.git`
 
 ### Part 1 (vibe coding)
 
