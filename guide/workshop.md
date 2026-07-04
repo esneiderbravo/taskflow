@@ -5,7 +5,7 @@ Two tracks implement **Task Dependencies** from the same codebase with different
 | Track | Branch | Spec |
 | ----- | ------ | ---- |
 | Vibe coding | `workshop/vibe-coding` | Minimal user story |
-| Spec-driven (SDD) | `workshop/sdd` | Full spec + [OpenSpec](https://github.com/Fission-AI/OpenSpec) |
+| Spec-driven (SDD) | `workshop/sdd` | Full spec |
 
 ```bash
 git checkout workshop/vibe-coding   # or workshop/sdd
