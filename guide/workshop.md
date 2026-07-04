@@ -13,3 +13,5 @@ make dev
 ```
 
 Open `guide/README.md` on the branch you checked out for the track-specific workflow.
+
+After both tracks commit their work, compare results: [compare.md](./compare.md).
