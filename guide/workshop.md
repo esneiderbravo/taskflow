@@ -30,3 +30,7 @@ Review the generated artifacts, then:
 ```
 
 Optional: `/opsx:explore` · `/opsx:verify`
+
+## Compare
+
+Commit your work, then run the diff checker: [compare.md](./compare.md)
