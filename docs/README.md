@@ -1,5 +1,7 @@
 # Workshop specs — Spec-driven (SDD) track
 
+**Start here:** [GUIDE.md](./GUIDE.md)
+
 Implement the **Task Dependencies** feature from:
 
 **[user-story-task-dependencies.md](./user-story-task-dependencies.md)**
