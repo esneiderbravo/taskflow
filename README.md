@@ -4,15 +4,23 @@ Full-stack project and task manager for the **PyCon 2026** workshop. Next.js · 
 
 ## Quick start
 
+**macOS / Linux**
+
 ```bash
 git clone https://github.com/esneiderbravo/taskflow.git
 cd taskflow
 make dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) · API docs at [http://localhost:8000/docs](http://localhost:8000/docs)
+**Windows (PowerShell)**
 
-**Windows:** `.\scripts\dev-local.ps1`
+```powershell
+git clone https://github.com/esneiderbravo/taskflow.git
+cd taskflow
+.\scripts\dev-local.ps1
+```
+
+Open [http://localhost:3000](http://localhost:3000) · API docs at [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ## Guides
 

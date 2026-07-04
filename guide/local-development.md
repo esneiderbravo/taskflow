@@ -10,11 +10,17 @@ API and frontend on your machine with hot reload. PostgreSQL runs in Docker. Pyt
 
 ## Start
 
+**macOS / Linux**
+
 ```bash
 make dev
 ```
 
-**Windows:** `.\scripts\dev-local.ps1`
+**Windows (PowerShell)**
+
+```powershell
+.\scripts\dev-local.ps1
+```
 
 ### First run
 
