@@ -29,6 +29,10 @@ const config: Config = {
           DEFAULT: "#d4846a",
           muted: "#b86f58",
         },
+        sage: {
+          DEFAULT: "#6b8f71",
+          muted: "#4a6b50",
+        },
       },
       fontFamily: {
         display: ["var(--font-fraunces)", "Georgia", "serif"],

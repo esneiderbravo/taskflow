@@ -3,6 +3,7 @@ name: taskflow
 services:
   db:
     image: postgres:16-alpine
+    container_name: db
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     environment:
@@ -20,6 +21,7 @@ services:
 
   backend:
     build: ./backend
+    container_name: backend
     ports:
       - "${BACKEND_PORT:-8000}:8000"
     depends_on:
@@ -39,6 +41,7 @@ services:
       context: ./frontend
       args:
         NEXT_PUBLIC_API_URL: http://localhost:${BACKEND_PORT:-8000}
+    container_name: frontend
     ports:
       - "${FRONTEND_PORT:-3000}:3000"
     depends_on:

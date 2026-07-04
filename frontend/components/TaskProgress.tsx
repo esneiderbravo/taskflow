@@ -14,7 +14,7 @@ export function TaskProgress({ tasks }: TaskProgressProps) {
   const segments = [
     { count: done, color: "bg-brass", label: "done" },
     { count: inProgress, color: "bg-coral", label: "in progress" },
-    { count: todo, color: "bg-surface-border", label: "ready" },
+    { count: todo, color: "bg-sage/60", label: "ready" },
   ];
 
   return (
@@ -51,7 +51,7 @@ export function TaskProgress({ tasks }: TaskProgressProps) {
         <dl className="mt-5 grid grid-cols-3 gap-4 border-t border-surface-border/60 pt-5">
           <div>
             <dt className="font-mono text-[10px] uppercase tracking-wider text-cream-faint">Ready</dt>
-            <dd className="mt-1 font-mono text-sm text-cream">{todo}</dd>
+            <dd className="mt-1 font-mono text-sm text-sage">{todo}</dd>
           </div>
           <div>
             <dt className="font-mono text-[10px] uppercase tracking-wider text-cream-faint">Active</dt>

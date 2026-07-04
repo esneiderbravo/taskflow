@@ -78,7 +78,7 @@ export function TaskList({ tasks, onStatusChange }: TaskListProps) {
       {tasks.map((task) => (
         <li
           key={task.id}
-          className="card flex flex-col gap-4 p-4 transition hover:bg-surface-hover sm:flex-row sm:items-start sm:justify-between"
+          className="card group flex flex-col gap-4 p-4 transition hover:border-brass/15 hover:bg-surface-hover sm:flex-row sm:items-start sm:justify-between"
         >
           <div className="min-w-0 flex-1">
             <h3 className="font-medium text-cream">{task.title}</h3>
@@ -91,7 +91,7 @@ export function TaskList({ tasks, onStatusChange }: TaskListProps) {
             <select
               value={task.status}
               onChange={(e) => onStatusChange(task.id, e.target.value as TaskStatus)}
-              className="rounded-md border border-surface-border bg-ink px-2.5 py-1.5 font-mono text-xs text-cream-muted"
+              className="select-field"
               aria-label={`Change status for ${task.title}`}
             >
               <option value="todo">Ready</option>

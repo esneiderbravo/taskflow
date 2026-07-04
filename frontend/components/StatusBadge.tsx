@@ -3,15 +3,15 @@ import { TaskStatus } from "@/lib/api";
 const STATUS_CONFIG: Record<TaskStatus, { label: string; className: string }> = {
   todo: {
     label: "Ready",
-    className: "bg-emerald-950/60 text-emerald-300/90 border-emerald-800/50",
+    className: "bg-sage/10 text-sage border-sage/25",
   },
   in_progress: {
     label: "In progress",
-    className: "bg-amber-950/60 text-amber-300/90 border-amber-800/50",
+    className: "bg-coral/10 text-coral border-coral/25",
   },
   done: {
     label: "Done",
-    className: "bg-surface-hover text-cream-muted border-surface-border",
+    className: "bg-brass/10 text-brass-light border-brass/25",
   },
 };
 

@@ -5,8 +5,9 @@
 body {
   @apply bg-ink font-sans text-cream antialiased;
   background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(201, 162, 39, 0.06), transparent),
     radial-gradient(circle at 1px 1px, rgba(237, 233, 227, 0.035) 1px, transparent 0);
-  background-size: 24px 24px;
+  background-size: 100% 100%, 24px 24px;
 }
 
 @layer base {
@@ -50,7 +51,11 @@ body {
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-md bg-brass px-5 py-2.5 font-sans text-sm font-semibold text-ink transition hover:bg-brass-light disabled:cursor-not-allowed disabled:opacity-40;
+    @apply inline-flex items-center justify-center rounded-md bg-brass px-5 py-2.5 font-sans text-sm font-semibold text-ink transition hover:bg-brass-light active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40;
+  }
+
+  .select-field {
+    @apply rounded-md border border-surface-border bg-ink px-2.5 py-1.5 font-mono text-xs text-cream-muted transition focus:border-brass/50 focus:outline-none;
   }
 
   .page-title {
