@@ -36,8 +36,7 @@ Open [http://localhost:3000](http://localhost:3000) · API docs at [http://local
 
 Detailed setup and workflows live in **[guide/](guide/README.md)**:
 
-- [SDD walkthrough](guide/sdd-walkthrough.md) — SDD track: clone to done
-- [Vibe coding walkthrough](guide/vibe-coding-walkthrough.md) — vibe coding track: clone to done
+- [SDD walkthrough](guide/sdd-walkthrough.md) — clone to done (start here)
 - [Local development](guide/local-development.md) — hot reload
 - [Docker](guide/docker.md) — full stack in containers
 - [SDD workshop](guide/workshop.md) — tooling overview
