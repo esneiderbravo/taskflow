@@ -118,6 +118,5 @@ Light theme, cobalt + slate, DM Sans. Use semantic Tailwind tokens (`page`, `acc
 
 - Branch: `workshop/sdd`
 - Minimal story: [guide/user-story-task-dependencies.md](guide/user-story-task-dependencies.md)
-- Enrich: `/enrich-story` → `guide/user-story-enriched.md`
-- Facilitator reference: `guide/reference/` (do not read during workshop)
+- Enrich: `/enrich-story` → `guide/user-story-enriched.md` (skill: `enrich-user-story` in your IDE's skills folder)
 - Compare tracks: [guide/compare.md](guide/compare.md)

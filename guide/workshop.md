@@ -48,7 +48,15 @@ Same minimal story as vibe coding — you enrich it as the first SDD step.
 /enrich-story
 ```
 
-Generates `guide/user-story-enriched.md` from the minimal story + CodeGraph + constitution.
+Generates `guide/user-story-enriched.md` from the minimal story, CodeGraph, constitution, and the **enrich-user-story** skill.
+
+| IDE | Skill path |
+| --- | ---------- |
+| Cursor | `.cursor/skills/enrich-user-story/SKILL.md` |
+| Claude Code | `.claude/skills/enrich-user-story/SKILL.md` |
+| Codex | `.codex/skills/enrich-user-story/SKILL.md` |
+| Factory | `.factory/skills/enrich-user-story/SKILL.md` |
+| GitHub Copilot | `.github/skills/enrich-user-story/SKILL.md` |
 
 ### 2. Propose the change
 
@@ -74,4 +82,4 @@ Optional: `/opsx:explore` · `/opsx:verify`
 
 Commit your work, then run the diff checker: [compare.md](./compare.md)
 
-Facilitator compares your enriched story against `guide/reference/` in debrief.
+In debrief, compare your implementation against `workshop/vibe-coding` and review whether your enriched spec covered all layers.
