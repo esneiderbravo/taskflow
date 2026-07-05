@@ -32,6 +32,10 @@ The repo includes `.mcp.json` and `.cursor/mcp.json` for CodeGraph. After `codeg
 
 Requires the `codegraph` CLI on your PATH. Do not commit `.codegraph/` — it is gitignored and rebuilt locally.
 
+### Constitution
+
+Project standards for AI agents live in `openspec/constitution/` and are injected into every OpenSpec change. Read `AGENTS.md` before implementing.
+
 ## Workflow
 
 Attach `guide/user-story-task-dependencies.md` in each step.

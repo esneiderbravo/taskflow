@@ -1,0 +1,43 @@
+schema: spec-driven
+
+context: |
+  TaskFlow — PyCon 2026 workshop app. Next.js 15 + FastAPI + PostgreSQL + Alembic.
+
+  CONSTITUTION (read before any change):
+  - openspec/constitution/architecture.md — layer flow, implementation order
+  - openspec/constitution/backend-standards.md — MVC, naming, managers
+  - openspec/constitution/frontend-standards.md — components, hooks, styling
+  - openspec/constitution/migrations.md — Alembic autogenerate ONLY, never hand-write
+  - openspec/constitution/api-standards.md — no /api prefix, status codes
+  - openspec/constitution/testing-standards.md — pytest + vitest patterns
+
+  NON-NEGOTIABLE:
+  - Backend: routes → controller → manager → model. Business logic in managers only.
+  - Migrations: edit model → make dev-migrate-create MSG="..." → review → make dev-migrate
+  - API paths: root-level (/projects, /tasks) — NOT /api
+  - Frontend: page → hook → lib/api.ts. No React Query.
+  - Tests: make dev-test must pass before a change is complete.
+
+  Agent rules for implementation: AGENTS.md and CLAUDE.md at project root.
+
+rules:
+  proposal:
+    - Read all openspec/constitution/*.md before scoping
+    - List affected layers (model, migration, manager, controller, routes, frontend, tests)
+    - Include non-goals and out-of-scope items
+    - Note API path convention (no /api prefix)
+  specs:
+    - Use Given/When/Then for every functional requirement
+    - Map each FR to a layer and file path from constitution
+    - Include error cases with HTTP status codes (404, 422)
+    - Reference existing patterns before inventing new abstractions
+  design:
+    - Follow implementation order from architecture.md
+    - State which manager owns business logic
+    - Describe migration approach (autogenerate, not manual)
+    - Include risks for graph/cycle features
+  tasks:
+    - Order tasks: model → migration → schemas → manager → controller → routes → lib/api → hooks → UI → tests
+    - Include explicit migration commands (make dev-migrate-create, make dev-migrate)
+    - Include make dev-test as final task
+    - One checkbox per file or logical unit; use "- [ ]" format
