@@ -10,7 +10,6 @@
 git checkout workshop/sdd
 make dev
 npm install -g @fission-ai/openspec@latest
-openspec init
 npm install -g @colbymchenry/codegraph
 codegraph init
 ```
@@ -21,20 +20,17 @@ codegraph init
 git checkout workshop/sdd
 .\scripts\dev-local.ps1
 npm install -g @fission-ai/openspec@latest
-openspec init
 npm install -g @colbymchenry/codegraph
 codegraph init
 ```
+
+OpenSpec and constitution are pre-configured in the repo — no `openspec init` needed.
 
 ### CodeGraph MCP
 
 **Mandatory:** agents must use CodeGraph before exploring code — no grep or self-directed search.
 
 The repo includes `.mcp.json` and `.cursor/mcp.json` for CodeGraph. After `codegraph init`, reload Cursor (**Settings → MCP**).
-
-```
-codegraph explore task dependencies   # first step, every time
-```
 
 Requires the `codegraph` CLI on your PATH. Do not commit `.codegraph/` — it is gitignored and rebuilt locally.
 
@@ -44,13 +40,19 @@ Project standards for AI agents live in `openspec/constitution/` and are injecte
 
 ## Workflow
 
-Attach `guide/user-story-task-dependencies.md` in each step.
+Same minimal story as vibe coding — you enrich it as the first SDD step.
 
-**Start with CodeGraph** — explore the feature area before propose/apply:
+### 1. Enrich the story
 
 ```
-codegraph explore task dependencies
+/enrich-story
 ```
+
+Generates `guide/user-story-enriched.md` from the minimal story + CodeGraph + constitution.
+
+### 2. Propose the change
+
+Attach `guide/user-story-enriched.md`:
 
 ```
 /opsx:propose task-dependencies
@@ -71,3 +73,5 @@ Optional: `/opsx:explore` · `/opsx:verify`
 ## Compare
 
 Commit your work, then run the diff checker: [compare.md](./compare.md)
+
+Facilitator compares your enriched story against `guide/reference/` in debrief.

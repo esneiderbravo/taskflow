@@ -21,6 +21,7 @@ context: |
   - Tests: make dev-test must pass before a change is complete.
 
   Agent rules for implementation: AGENTS.md and CLAUDE.md at project root.
+  SDD workshop: enrich minimal story with /enrich-story before /opsx:propose. Input: guide/user-story-task-dependencies.md. Output: guide/user-story-enriched.md.
 
 rules:
   proposal:

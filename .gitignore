@@ -18,6 +18,9 @@ build/
 # Local indexes
 .codegraph/
 
+# Workshop — participant-generated enriched story
+guide/user-story-enriched.md
+
 # IDE
 .idea/
 .vscode/

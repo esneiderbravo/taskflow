@@ -31,11 +31,12 @@ See [codegraph.md](openspec/constitution/codegraph.md). Saves tokens and improve
 ## SDD workflow
 
 1. **CodeGraph explore** the feature area
-2. Read constitution files + feature spec (`guide/user-story-task-dependencies.md`)
-3. `/opsx:propose <change-name>` → review proposal, specs, design, tasks
-4. `/opsx:apply` → implement `tasks.md` in order (CodeGraph `node` before each file edit)
-5. Run tests before marking complete
-6. `/opsx:archive` when done
+2. Read constitution files + minimal story (`guide/user-story-task-dependencies.md`)
+3. **`/enrich-story`** → generates `guide/user-story-enriched.md`
+4. `/opsx:propose <change-name>` → attach enriched story; review proposal, specs, design, tasks
+5. `/opsx:apply` → implement `tasks.md` in order (CodeGraph `node` before each file edit)
+6. Run tests before marking complete
+7. `/opsx:archive` when done
 
 ## Architecture (summary)
 
@@ -116,5 +117,7 @@ Light theme, cobalt + slate, DM Sans. Use semantic Tailwind tokens (`page`, `acc
 ## Workshop
 
 - Branch: `workshop/sdd`
-- Feature spec: [guide/user-story-task-dependencies.md](guide/user-story-task-dependencies.md)
+- Minimal story: [guide/user-story-task-dependencies.md](guide/user-story-task-dependencies.md)
+- Enrich: `/enrich-story` → `guide/user-story-enriched.md`
+- Facilitator reference: `guide/reference/` (do not read during workshop)
 - Compare tracks: [guide/compare.md](guide/compare.md)

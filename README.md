@@ -14,7 +14,6 @@ cd taskflow
 git checkout workshop/sdd
 make dev
 npm install -g @fission-ai/openspec@latest
-openspec init
 npm install -g @colbymchenry/codegraph
 codegraph init
 ```
@@ -27,7 +26,6 @@ cd taskflow
 git checkout workshop/sdd
 .\scripts\dev-local.ps1
 npm install -g @fission-ai/openspec@latest
-openspec init
 npm install -g @colbymchenry/codegraph
 codegraph init
 ```
@@ -40,5 +38,5 @@ Detailed setup and workflows live in **[guide/](guide/README.md)**:
 
 - [Local development](guide/local-development.md) — hot reload
 - [Docker](guide/docker.md) — full stack in containers
-- [SDD workshop](guide/workshop.md) — OpenSpec workflow
-- [User story](guide/user-story-task-dependencies.md) — full feature spec
+- [SDD workshop](guide/workshop.md) — enrich → OpenSpec workflow
+- [User story (minimal)](guide/user-story-task-dependencies.md) — enrich with `/enrich-story`

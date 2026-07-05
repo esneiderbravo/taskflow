@@ -52,10 +52,13 @@ codegraph sync        # After edits
 ## SDD commands
 
 ```
+/enrich-story
 /opsx:propose <change-name>
 /opsx:apply
 /opsx:archive
 ```
+
+Attach `guide/user-story-enriched.md` when proposing (run `/enrich-story` first).
 
 ## Full reference
 
