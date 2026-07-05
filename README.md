@@ -30,7 +30,8 @@ Open [http://localhost:3000](http://localhost:3000) · API docs at [http://local
 
 Detailed setup and workflows live in **[guide/](guide/README.md)**:
 
+- [Vibe coding walkthrough](guide/vibe-coding-walkthrough.md) — clone to done (start here)
 - [Local development](guide/local-development.md) — hot reload
 - [Docker](guide/docker.md) — full stack in containers
-- [Vibe coding workshop](guide/workshop.md) — this track's workflow
+- [Vibe coding workshop](guide/workshop.md) — workflow summary
 - [User story](guide/user-story-task-dependencies.md) — feature spec

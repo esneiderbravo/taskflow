@@ -1,8 +1,10 @@
 # Vibe Coding Workshop
 
+Full step-by-step: **[vibe-coding-walkthrough.md](./vibe-coding-walkthrough.md)** (clone → one prompt → implement → compare)
+
 Spec: [user-story-task-dependencies.md](./user-story-task-dependencies.md)
 
-## Setup
+## Quick start
 
 **macOS / Linux**
 
@@ -26,6 +28,8 @@ Attach `guide/user-story-task-dependencies.md`, then:
 Implement the feature described in guide/user-story-task-dependencies.md.
 ```
 
+See [vibe-coding-walkthrough.md](./vibe-coding-walkthrough.md) for the full sequence including tests and compare.
+
 ## Compare
 
-Commit your work, then run the diff checker: [compare.md](./compare.md)
+Commit locally, then [compare.md](./compare.md) — diff against `workshop/sdd`.
