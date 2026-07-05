@@ -33,6 +33,8 @@ IDE folders symlink directly into `ai-agents/`:
 | `.factory/commands` | `ai-agents/commands` |
 | `.github/skills` | `ai-agents/skills` |
 | `.github/prompts` | `ai-agents/prompts` |
+| `.agents/skills` | `ai-agents/skills` |
+| `.gemini/skills` | `ai-agents/skills` |
 | `.mcp.json` | `ai-agents/mcp.json` |
 
 Add a skill in `ai-agents/skills/` — it appears in every IDE. Create a file under `.claude/skills/` — it writes to `ai-agents/skills/` via symlink.
