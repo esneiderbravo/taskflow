@@ -18,6 +18,10 @@ Project standards live in `openspec/constitution/`:
 
 OpenSpec injects these via `openspec/config.yaml` during `/opsx:propose` and artifact generation.
 
+## AI specs
+
+Skills, commands, and prompts live in [`ai-agents/`](ai-agents/README.md). IDE folders symlink directly to `ai-agents/skills`, `ai-agents/commands`, and `ai-agents/prompts` — edit `ai-agents/` only.
+
 ## CodeGraph — mandatory first
 
 **Before any codebase exploration, use CodeGraph.** Do not grep, semantic-search, or read directories on your own.
@@ -118,5 +122,5 @@ Light theme, cobalt + slate, DM Sans. Use semantic Tailwind tokens (`page`, `acc
 
 - Branch: `workshop/sdd`
 - Minimal story: [guide/user-story-task-dependencies.md](guide/user-story-task-dependencies.md)
-- Enrich: `/enrich-story` → `guide/user-story-enriched.md` (skill: `enrich-user-story` in your IDE's skills folder)
+- Enrich: `/enrich-story` → `guide/user-story-enriched.md` (skill: `ai-agents/skills/enrich-user-story/SKILL.md`)
 - Compare tracks: [guide/compare.md](guide/compare.md)

@@ -2,10 +2,12 @@
 
 | Guide | When to use |
 | ----- | ----------- |
+| [SDD walkthrough](./sdd-walkthrough.md) | **SDD track** — clone → enrich → propose → apply → archive |
+| [Vibe coding walkthrough](./vibe-coding-walkthrough.md) | **Vibe coding track** — clone → one prompt → implement |
 | [Local development](./local-development.md) | Hot reload — `make dev` or `.\scripts\dev-local.ps1` |
 | [Docker](./docker.md) | Full stack — `make up` or `docker compose up --build -d` |
-| [SDD workshop](./workshop.md) | This branch — enrich → OpenSpec → Task Dependencies |
-| [User story (minimal)](./user-story-task-dependencies.md) | Starting input — enrich with `/enrich-story` |
+| [SDD workshop](./workshop.md) | Tooling overview — OpenSpec, CodeGraph, constitution |
+| [User story (minimal)](./user-story-task-dependencies.md) | Workshop input — enrich with `/enrich-story` |
 | [Compare tracks](./compare.md) | Final step — diff vibe coding vs SDD |
 
 Other workshop track: `workshop/vibe-coding` (minimal user story, single prompt).

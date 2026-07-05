@@ -1,85 +1,49 @@
 # SDD Workshop
 
+Full step-by-step: **[sdd-walkthrough.md](./sdd-walkthrough.md)** (clone → enrich → propose → apply → archive → compare)
+
 [OpenSpec](https://github.com/Fission-AI/OpenSpec) · Spec: [user-story-task-dependencies.md](./user-story-task-dependencies.md)
 
-## Setup
+## Tooling
 
-**macOS / Linux**
+OpenSpec and constitution are pre-configured — no `openspec init` needed.
+
+| Tool | Purpose |
+| ---- | ------- |
+| [OpenSpec](https://github.com/Fission-AI/OpenSpec) | Proposal, specs, design, tasks |
+| CodeGraph | Explore codebase before any search |
+| `ai-agents/` | Shared skills, commands, prompts ([README](../ai-agents/README.md)) |
+| `openspec/constitution/` | Project standards injected into every change |
+| [AGENTS.md](../AGENTS.md) | Rules agents follow when implementing |
+
+Install once:
 
 ```bash
-git checkout workshop/sdd
-make dev
 npm install -g @fission-ai/openspec@latest
 npm install -g @colbymchenry/codegraph
 codegraph init
 ```
 
-**Windows (PowerShell)**
+Reload Cursor MCP after `codegraph init` (**Settings → MCP**). Config: `ai-agents/mcp.json`.
 
-```powershell
-git checkout workshop/sdd
-.\scripts\dev-local.ps1
-npm install -g @fission-ai/openspec@latest
-npm install -g @colbymchenry/codegraph
-codegraph init
-```
-
-OpenSpec and constitution are pre-configured in the repo — no `openspec init` needed.
-
-### CodeGraph MCP
-
-**Mandatory:** agents must use CodeGraph before exploring code — no grep or self-directed search.
-
-The repo includes `.mcp.json` and `.cursor/mcp.json` for CodeGraph. After `codegraph init`, reload Cursor (**Settings → MCP**).
-
-Requires the `codegraph` CLI on your PATH. Do not commit `.codegraph/` — it is gitignored and rebuilt locally.
-
-### Constitution
-
-Project standards for AI agents live in `openspec/constitution/` and are injected into every OpenSpec change. Read `AGENTS.md` before implementing.
-
-## Workflow
-
-Same minimal story as vibe coding — you enrich it as the first SDD step.
-
-### 1. Enrich the story
+## Workflow summary
 
 ```
 /enrich-story
-```
-
-Generates `guide/user-story-enriched.md` from the minimal story, CodeGraph, constitution, and the **enrich-user-story** skill.
-
-| IDE | Skill path |
-| --- | ---------- |
-| Cursor | `.cursor/skills/enrich-user-story/SKILL.md` |
-| Claude Code | `.claude/skills/enrich-user-story/SKILL.md` |
-| Codex | `.codex/skills/enrich-user-story/SKILL.md` |
-| Factory | `.factory/skills/enrich-user-story/SKILL.md` |
-| GitHub Copilot | `.github/skills/enrich-user-story/SKILL.md` |
-
-### 2. Propose the change
-
-Attach `guide/user-story-enriched.md`:
-
-```
-/opsx:propose task-dependencies
-```
-
-Review the generated artifacts, then:
-
-```
+    ↓
+/opsx:propose task-dependencies   (attach guide/user-story-enriched.md)
+    ↓
 /opsx:apply
-```
-
-```
+    ↓
+make dev-test
+    ↓
 /opsx:archive
+    ↓
+compare.md
 ```
 
-Optional: `/opsx:explore` · `/opsx:verify`
+Optional: `/opsx:explore` before proposing.
 
 ## Compare
 
-Commit your work, then run the diff checker: [compare.md](./compare.md)
-
-In debrief, compare your implementation against `workshop/vibe-coding` and review whether your enriched spec covered all layers.
+Commit locally, then [compare.md](./compare.md) — diff against `workshop/vibe-coding`.

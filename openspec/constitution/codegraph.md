@@ -19,7 +19,7 @@ npm install -g @colbymchenry/codegraph
 codegraph init          # in project root — creates .codegraph/
 ```
 
-Reload Cursor after `.cursor/mcp.json` is present (**Settings → MCP**).
+Reload Cursor after `ai-agents/mcp.json` is present (symlinked as `.cursor/mcp.json`) — **Settings → MCP**.
 
 ## MCP tools (preferred in Cursor)
 
