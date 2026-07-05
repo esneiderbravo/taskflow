@@ -70,12 +70,17 @@ Keep the dev server running in a terminal (or restart it before testing later).
 
 ## Phase 2 — Install agent tooling
 
-### 6. Install OpenSpec and CodeGraph
+### 6. Install agent tooling
+
+From the repo root:
 
 ```bash
+npm install
 npm install -g @fission-ai/openspec@latest
 npm install -g @colbymchenry/codegraph
 ```
+
+`npm install` pulls in `ui-ux-pro-max-cli`, used by the design agent skills in `ai-agents/skills/`.
 
 ### 7. Initialize CodeGraph
 
