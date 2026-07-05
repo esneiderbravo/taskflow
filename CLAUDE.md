@@ -2,24 +2,32 @@
 
 Instructions for Claude (and compatible agents) working in TaskFlow.
 
-**Read [AGENTS.md](AGENTS.md) first** — it contains the full rules. This file highlights what matters most during implementation.
+**Read [AGENTS.md](AGENTS.md) first** — it contains the full rules.
+
+## Mandatory: CodeGraph before anything else
+
+**Do not search the codebase on your own.** No grep, no semantic search, no directory scanning.
+
+```
+1. codegraph explore "<feature area>"     # or MCP codegraph_explore
+2. codegraph node "<symbol or file>"      # for each edit target
+3. Read ONLY files CodeGraph returned
+```
+
+This is required to save tokens and get accurate call paths. See [codegraph.md](openspec/constitution/codegraph.md).
 
 ## Before any code change
 
-1. Read `openspec/constitution/*.md` (architecture, backend, frontend, migrations, API, testing)
-2. If an OpenSpec change exists, read `openspec/changes/<name>/tasks.md` and follow checkboxes in order
-3. Use CodeGraph to explore impact: `codegraph explore <query>`
+1. **CodeGraph explore** — map symbols and impact
+2. Read `openspec/constitution/*.md` (standards only — not code discovery)
+3. If an OpenSpec change exists, read `openspec/changes/<name>/tasks.md`
 
 ## Migrations
 
 Never create migration files by hand. Always:
 
 ```bash
-# 1. Edit models
-# 2. Generate
 make dev-migrate-create MSG="add task dependencies"
-# 3. Review backend/alembic/versions/<new_file>.py
-# 4. Apply
 make dev-migrate
 ```
 
@@ -37,11 +45,9 @@ make dev-migrate
 ```bash
 make dev              # Start (macOS/Linux)
 make dev-test         # Run all tests
-make dev-migrate-create MSG="..."  # New migration
-make dev-migrate      # Apply migrations
+codegraph explore <query>   # BEFORE reading code
+codegraph sync        # After edits
 ```
-
-Windows: `.\scripts\dev-local.ps1` — see [guide/local-development.md](guide/local-development.md).
 
 ## SDD commands
 
@@ -50,8 +56,6 @@ Windows: `.\scripts\dev-local.ps1` — see [guide/local-development.md](guide/lo
 /opsx:apply
 /opsx:archive
 ```
-
-Attach `guide/user-story-task-dependencies.md` when proposing.
 
 ## Full reference
 

@@ -8,6 +8,7 @@ Project standards live in `openspec/constitution/`:
 
 | File | Purpose |
 | ---- | ------- |
+| [codegraph.md](openspec/constitution/codegraph.md) | **Mandatory** — explore before any search |
 | [architecture.md](openspec/constitution/architecture.md) | Layer flow, implementation order |
 | [backend-standards.md](openspec/constitution/backend-standards.md) | MVC, naming, managers, docstrings |
 | [frontend-standards.md](openspec/constitution/frontend-standards.md) | Components, hooks, Tailwind tokens |
@@ -17,15 +18,24 @@ Project standards live in `openspec/constitution/`:
 
 OpenSpec injects these via `openspec/config.yaml` during `/opsx:propose` and artifact generation.
 
+## CodeGraph — mandatory first
+
+**Before any codebase exploration, use CodeGraph.** Do not grep, semantic-search, or read directories on your own.
+
+1. `codegraph explore "<feature>"` or MCP `codegraph_explore`
+2. `codegraph node "<symbol>"` for files you will edit
+3. Read **only** files CodeGraph returns
+
+See [codegraph.md](openspec/constitution/codegraph.md). Saves tokens and improves accuracy.
+
 ## SDD workflow
 
-1. Read constitution files + feature spec (`guide/user-story-task-dependencies.md`)
-2. `/opsx:propose <change-name>` → review proposal, specs, design, tasks
-3. `/opsx:apply` → implement `tasks.md` in order
-4. Run tests before marking complete
-5. `/opsx:archive` when done
-
-Use CodeGraph (`codegraph explore`, MCP tools) to trace callers and impact before editing.
+1. **CodeGraph explore** the feature area
+2. Read constitution files + feature spec (`guide/user-story-task-dependencies.md`)
+3. `/opsx:propose <change-name>` → review proposal, specs, design, tasks
+4. `/opsx:apply` → implement `tasks.md` in order (CodeGraph `node` before each file edit)
+5. Run tests before marking complete
+6. `/opsx:archive` when done
 
 ## Architecture (summary)
 
@@ -95,6 +105,7 @@ Light theme, cobalt + slate, DM Sans. Use semantic Tailwind tokens (`page`, `acc
 
 ## Do not
 
+- Explore the codebase with grep, search, or broad file reads before CodeGraph
 - Hand-write Alembic migrations for schema changes
 - Add business logic to routes or controllers
 - Use SQLite or raw SQL without design justification

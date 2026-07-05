@@ -2,6 +2,10 @@
 
 TaskFlow is a full-stack workshop app: **Next.js 15 + FastAPI + PostgreSQL + Alembic**.
 
+## Code discovery
+
+**Use CodeGraph first** — see `codegraph.md`. Do not grep or search the repo before running `codegraph explore`.
+
 ## Request flow (backend)
 
 ```

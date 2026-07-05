@@ -28,7 +28,13 @@ codegraph init
 
 ### CodeGraph MCP
 
+**Mandatory:** agents must use CodeGraph before exploring code — no grep or self-directed search.
+
 The repo includes `.mcp.json` and `.cursor/mcp.json` for CodeGraph. After `codegraph init`, reload Cursor (**Settings → MCP**).
+
+```
+codegraph explore task dependencies   # first step, every time
+```
 
 Requires the `codegraph` CLI on your PATH. Do not commit `.codegraph/` — it is gitignored and rebuilt locally.
 
@@ -39,6 +45,12 @@ Project standards for AI agents live in `openspec/constitution/` and are injecte
 ## Workflow
 
 Attach `guide/user-story-task-dependencies.md` in each step.
+
+**Start with CodeGraph** — explore the feature area before propose/apply:
+
+```
+codegraph explore task dependencies
+```
 
 ```
 /opsx:propose task-dependencies

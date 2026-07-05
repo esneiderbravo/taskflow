@@ -4,6 +4,7 @@ context: |
   TaskFlow — PyCon 2026 workshop app. Next.js 15 + FastAPI + PostgreSQL + Alembic.
 
   CONSTITUTION (read before any change):
+  - openspec/constitution/codegraph.md — MANDATORY: CodeGraph first, no self-search
   - openspec/constitution/architecture.md — layer flow, implementation order
   - openspec/constitution/backend-standards.md — MVC, naming, managers
   - openspec/constitution/frontend-standards.md — components, hooks, styling
@@ -12,6 +13,7 @@ context: |
   - openspec/constitution/testing-standards.md — pytest + vitest patterns
 
   NON-NEGOTIABLE:
+  - CodeGraph FIRST: use codegraph_explore / codegraph_node MCP (or CLI) before any grep, search, or broad file reads. Do not explore the codebase on your own — reduces tokens.
   - Backend: routes → controller → manager → model. Business logic in managers only.
   - Migrations: edit model → make dev-migrate-create MSG="..." → review → make dev-migrate
   - API paths: root-level (/projects, /tasks) — NOT /api
@@ -22,21 +24,25 @@ context: |
 
 rules:
   proposal:
+    - Use CodeGraph explore first to map affected symbols and layers — no repo search before that
     - Read all openspec/constitution/*.md before scoping
     - List affected layers (model, migration, manager, controller, routes, frontend, tests)
     - Include non-goals and out-of-scope items
     - Note API path convention (no /api prefix)
   specs:
+    - Use CodeGraph to verify existing symbols before defining new ones
     - Use Given/When/Then for every functional requirement
     - Map each FR to a layer and file path from constitution
     - Include error cases with HTTP status codes (404, 422)
     - Reference existing patterns before inventing new abstractions
   design:
+    - Use CodeGraph node/callers to document integration points — cite actual symbols found
     - Follow implementation order from architecture.md
     - State which manager owns business logic
     - Describe migration approach (autogenerate, not manual)
     - Include risks for graph/cycle features
   tasks:
+    - First task: CodeGraph explore for the change area; list target files from graph output
     - Order tasks: model → migration → schemas → manager → controller → routes → lib/api → hooks → UI → tests
     - Include explicit migration commands (make dev-migrate-create, make dev-migrate)
     - Include make dev-test as final task
