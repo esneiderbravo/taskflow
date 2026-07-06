@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, ClipboardList } from "lucide-react";
 import { ProjectIcon } from "@/components/ProjectIcon";
 import { ProjectDetail } from "@/lib/api";
 import { formatDate } from "@/lib/format";
@@ -34,12 +34,15 @@ export function ProjectOverview({ project }: ProjectOverviewProps) {
                   <h1 id="project-overview-heading" className="page-title">
                     {project.name}
                   </h1>
-                  <p className="mt-2 text-sm text-foreground-muted">
-                    Created {formatDate(project.created_at)}
+                  <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-foreground-muted">
+                    <span>Created {formatDate(project.created_at)}</span>
                     {total > 0 && (
                       <>
-                        <span aria-hidden="true"> · </span>
-                        <span>{total} tasks total</span>
+                        <span aria-hidden="true">·</span>
+                        <span className="inline-flex items-center gap-1.5">
+                          <ClipboardList className="h-4 w-4 text-icon" strokeWidth={2} aria-hidden="true" />
+                          {total} tasks total
+                        </span>
                       </>
                     )}
                   </p>
