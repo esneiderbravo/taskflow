@@ -2,11 +2,11 @@
 
 from uuid import UUID
 
-from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 from app.managers import TaskManager
-from app.schemas import TaskCreate, TaskRead, TaskUpdate
+from app.models import TaskStatus
+from app.schemas import PaginatedTasks, TaskCreate, TaskRead, TaskUpdate
 
 
 class TaskController:
@@ -20,19 +20,40 @@ class TaskController:
         """
         self.manager = TaskManager(db)
 
-    def list_tasks(self, project_id: UUID) -> list[TaskRead]:
-        """Return all tasks for a project as API response models.
+    def list_tasks(
+        self,
+        project_id: UUID,
+        search: str | None = None,
+        status: TaskStatus | None = None,
+        limit: int = 20,
+        offset: int = 0,
+    ) -> PaginatedTasks:
+        """Return a paginated list of tasks for a project.
 
         Args:
             project_id: Parent project primary key.
+            search: Optional case-insensitive title/description filter.
+            status: Optional workflow status filter.
+            limit: Maximum rows to return.
+            offset: Number of rows to skip.
 
         Returns:
-            list[TaskRead]: Tasks belonging to the project.
+            PaginatedTasks: Matching tasks and pagination metadata.
 
         Raises:
             HTTPException: If the parent project does not exist.
         """
-        return [TaskRead.model_validate(t) for t in self.manager.list_by_project(project_id)]
+        tasks, total = self.manager.list_by_project(
+            project_id,
+            search=search,
+            status=status,
+            limit=limit,
+            offset=offset,
+        )
+        return PaginatedTasks(
+            items=[TaskRead.model_validate(task) for task in tasks],
+            total=total,
+        )
 
     def get_task(self, task_id: UUID) -> TaskRead:
         """Return a single task as an API response model.
