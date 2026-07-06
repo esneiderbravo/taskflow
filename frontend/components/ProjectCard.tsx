@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ProjectIcon } from "@/components/ProjectIcon";
 import { ProjectSummary, TaskCounts } from "@/lib/api";
 import { formatDate } from "@/lib/format";
 
@@ -10,7 +11,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const { task_counts: taskCounts } = project;
   const total = taskCounts.todo + taskCounts.in_progress + taskCounts.done;
   const donePercent = total > 0 ? Math.round((taskCounts.done / total) * 100) : 0;
-  const initial = project.name.trim().charAt(0).toUpperCase() || "?";
 
   return (
     <Link
@@ -19,10 +19,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
     >
       <div className="flex items-start gap-3">
         <span
-          className="icon-well-accent h-10 w-10 text-sm font-semibold transition group-hover:bg-accent group-hover:text-white"
+          className="icon-well-accent h-10 w-10 transition group-hover:bg-accent group-hover:text-white"
           aria-hidden="true"
         >
-          {initial}
+          <ProjectIcon size="md" />
         </span>
         <div className="min-w-0 flex-1">
           <h2 className="truncate text-base font-semibold text-foreground transition group-hover:text-accent">
