@@ -2,13 +2,67 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+:root {
+  --color-page: 244 246 250;
+  --color-foreground: 15 23 42;
+  --color-foreground-muted: 71 85 105;
+  --color-foreground-faint: 148 163 184;
+  --color-surface: 244 246 250;
+  --color-surface-raised: 255 255 255;
+  --color-surface-hover: 248 250 252;
+  --color-surface-border: 226 232 240;
+  --color-surface-input: 255 255 255;
+  --color-accent: 29 78 216;
+  --color-accent-light: 37 99 235;
+  --color-accent-dim: 30 58 138;
+  --color-status-ready: 100 116 139;
+  --color-status-active: 217 119 6;
+  --color-status-done: 5 150 105;
+  --color-status-danger: 225 29 72;
+  --color-icon: 100 116 139;
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 0 0 1px rgba(226, 232, 240, 0.8);
+  --shadow-card-hover: 0 4px 16px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(29, 78, 216, 0.12);
+  --shadow-header: 0 1px 0 rgba(226, 232, 240, 0.9);
+  --body-gradient: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 0.55) 0%,
+    rgb(238 242 247 / 0) 12rem
+  );
+  --modal-backdrop: rgb(15 23 42 / 0.4);
+}
+
+.dark {
+  --color-page: 15 23 42;
+  --color-foreground: 248 250 252;
+  --color-foreground-muted: 203 213 225;
+  --color-foreground-faint: 148 163 184;
+  --color-icon: 186 198 214;
+  --color-surface: 15 23 42;
+  --color-surface-raised: 30 41 59;
+  --color-surface-hover: 51 65 85;
+  --color-surface-border: 71 85 105;
+  --color-surface-input: 30 41 59;
+  --color-accent: 96 165 250;
+  --color-accent-light: 147 197 253;
+  --color-accent-dim: 59 130 246;
+  --color-status-ready: 161 174 192;
+  --color-status-active: 251 191 36;
+  --color-status-done: 52 211 153;
+  --color-status-danger: 251 113 133;
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(71, 85, 105, 0.55);
+  --shadow-card-hover: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(96, 165, 250, 0.35);
+  --shadow-header: 0 1px 0 rgba(71, 85, 105, 0.9);
+  --body-gradient: linear-gradient(
+    180deg,
+    rgb(51 65 85 / 0.45) 0%,
+    rgb(15 23 42 / 0) 14rem
+  );
+  --modal-backdrop: rgb(0 0 0 / 0.72);
+}
+
 body {
   @apply bg-page font-sans text-foreground antialiased;
-  background-image:
-    radial-gradient(ellipse 70% 45% at 50% -10%, rgba(37, 99, 235, 0.05), transparent),
-    linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
-  background-size: 100% 100%, 32px 32px, 32px 32px;
+  background-image: var(--body-gradient);
 }
 
 @layer base {
@@ -20,7 +74,7 @@ body {
   select:focus-visible,
   button:focus-visible,
   a:focus-visible {
-    @apply outline-none ring-2 ring-accent/30 ring-offset-2 ring-offset-page;
+    @apply outline-none ring-2 ring-accent/25 ring-offset-2 ring-offset-page;
   }
 }
 
@@ -36,7 +90,27 @@ body {
 
 @layer components {
   .section-heading {
-    @apply text-sm font-semibold text-foreground;
+    @apply text-sm font-semibold tracking-tight text-foreground;
+  }
+
+  .section-label {
+    @apply text-xs font-medium text-foreground-faint;
+  }
+
+  .icon-well {
+    @apply flex shrink-0 items-center justify-center rounded-lg bg-page text-icon;
+  }
+
+  .icon-well-accent {
+    @apply icon-well bg-accent/10 text-accent;
+  }
+
+  .dark .icon-well {
+    @apply bg-surface-hover text-icon;
+  }
+
+  .dark .icon-well-accent {
+    @apply bg-accent/20 text-accent-light;
   }
 
   .card {
@@ -44,30 +118,138 @@ body {
   }
 
   .card-interactive {
-    @apply card transition duration-200 hover:border-accent/20 hover:bg-surface-hover hover:shadow-card-hover;
+    @apply card transition duration-200 hover:border-accent/20 hover:shadow-card-hover;
+  }
+
+  .alert-danger {
+    @apply card border-status-danger/20 bg-status-danger/10;
   }
 
   .input-field {
-    @apply w-full rounded-lg border border-surface-border bg-surface-input px-4 py-2.5 font-sans text-foreground shadow-sm placeholder:text-foreground-faint transition focus:border-accent/40 focus:outline-none focus:ring-2 focus:ring-accent/10;
+    @apply w-full rounded-lg border border-surface-border bg-surface-input px-3.5 py-2.5 text-sm text-foreground shadow-sm placeholder:text-foreground-faint transition focus:border-accent/35 focus:outline-none focus:ring-2 focus:ring-accent/10;
+  }
+
+  .dark .input-field {
+    @apply placeholder:text-foreground-muted;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-lg bg-accent px-5 py-2.5 font-sans text-sm font-semibold text-white shadow-sm transition hover:bg-accent-light active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40;
+    @apply inline-flex items-center justify-center rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-accent-light active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-lg border border-surface-border bg-surface-raised px-3.5 py-2 text-sm font-medium text-foreground-muted shadow-sm transition hover:border-accent/20 hover:text-accent;
   }
 
   .select-field {
-    @apply rounded-lg border border-surface-border bg-surface-input px-2.5 py-1.5 font-mono text-xs text-foreground-muted shadow-sm transition focus:border-accent/40 focus:outline-none focus:ring-2 focus:ring-accent/10;
+    @apply rounded-lg border border-surface-border bg-surface-input px-2.5 py-1.5 text-xs text-foreground-muted shadow-sm transition focus:border-accent/35 focus:outline-none focus:ring-2 focus:ring-accent/10;
   }
 
   .page-title {
-    @apply font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl;
+    @apply text-2xl font-semibold tracking-tight text-foreground sm:text-3xl;
   }
 
   .page-lead {
-    @apply mt-3 max-w-lg text-base leading-relaxed text-foreground-muted;
+    @apply mt-2 max-w-2xl text-sm leading-relaxed text-foreground-muted sm:text-base;
   }
 
   .back-link {
-    @apply inline-flex items-center gap-1.5 text-sm font-medium text-foreground-faint transition hover:text-accent;
+    @apply inline-flex items-center gap-1.5 text-sm font-medium text-foreground-muted transition hover:text-accent;
+  }
+
+  .stat-chip {
+    @apply inline-flex items-center gap-2 rounded-lg border border-surface-border bg-surface-raised px-3 py-2 text-sm shadow-sm;
+  }
+
+  .stat-chip-value {
+    @apply font-semibold tabular-nums text-foreground;
+  }
+
+  .stat-chip-label {
+    @apply text-foreground-muted;
+  }
+
+  .kanban-board {
+    @apply grid gap-4 lg:grid-cols-3;
+  }
+
+  .kanban-column {
+    @apply flex min-h-[16rem] flex-col rounded-xl border border-surface-border bg-surface-hover/35;
+  }
+
+  .dark .kanban-column {
+    @apply bg-surface-hover/50;
+  }
+
+  .kanban-column-drop {
+    @apply border-accent/30 bg-accent/[0.02] ring-2 ring-accent/15;
+  }
+
+  .kanban-column-header {
+    @apply flex items-center gap-2.5 border-b border-surface-border px-4 py-3;
+  }
+
+  .kanban-column-body {
+    @apply flex flex-1 flex-col gap-2 p-3;
+  }
+
+  .kanban-column-empty {
+    @apply flex flex-1 items-center justify-center rounded-lg border border-dashed border-surface-border px-3 py-10 text-center text-xs text-foreground-muted;
+  }
+
+  .kanban-card {
+    @apply cursor-grab rounded-lg border border-surface-border bg-surface-raised p-3.5 shadow-sm transition active:cursor-grabbing hover:border-accent/15 hover:shadow-card;
+  }
+
+  .kanban-card-dragging {
+    @apply scale-[0.98] border-accent/25 opacity-55 shadow-none;
+  }
+
+  .kanban-move-btn {
+    @apply inline-flex h-7 w-7 items-center justify-center rounded-md border border-surface-border bg-page text-icon transition hover:border-accent/20 hover:bg-accent/5 hover:text-accent;
+  }
+
+  .modal-dialog {
+    @apply fixed inset-0 z-50 m-0 hidden h-[100dvh] max-h-none w-full max-w-none border-0 bg-transparent p-4;
+  }
+
+  .modal-dialog[open] {
+    @apply flex items-center justify-center;
+  }
+
+  .modal-dialog::backdrop {
+    background-color: var(--modal-backdrop);
+  }
+
+  .modal-panel {
+    @apply w-full max-w-lg overflow-hidden rounded-xl border border-surface-border bg-surface-raised shadow-card;
+  }
+
+  .modal-close-btn {
+    @apply inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-icon transition hover:bg-page hover:text-foreground;
+  }
+
+  .theme-toggle {
+    @apply flex items-center rounded-lg border border-surface-border bg-surface-raised p-1 shadow-sm;
+  }
+
+  .theme-toggle-btn {
+    @apply inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition;
+  }
+
+  .theme-toggle-btn-active {
+    @apply bg-page text-foreground shadow-sm;
+  }
+
+  .theme-toggle-btn-inactive {
+    @apply text-foreground-muted hover:bg-surface-hover/60 hover:text-foreground;
+  }
+
+  .dark .theme-toggle-btn-active {
+    @apply bg-accent/20 text-accent-light ring-1 ring-accent/30;
+  }
+
+  .dark .theme-toggle-btn-inactive {
+    @apply text-icon hover:bg-surface-hover hover:text-foreground;
   }
 }
