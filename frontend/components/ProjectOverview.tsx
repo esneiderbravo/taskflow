@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
+import { ProjectIcon } from "@/components/ProjectIcon";
 import { ProjectDetail } from "@/lib/api";
 import { formatDate } from "@/lib/format";
 import { TaskMetrics } from "@/components/TaskMetrics";
@@ -16,9 +18,7 @@ export function ProjectOverview({ project }: ProjectOverviewProps) {
   return (
     <section aria-labelledby="project-overview-heading" className="space-y-6">
       <Link href="/" className="back-link">
-        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-        </svg>
+        <ChevronLeft className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
         All projects
       </Link>
 
@@ -29,7 +29,7 @@ export function ProjectOverview({ project }: ProjectOverviewProps) {
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="min-w-0 flex-1">
               <div className="flex items-start gap-4">
-                <ProjectAvatar name={project.name} />
+                <ProjectAvatar />
                 <div className="min-w-0">
                   <h1 id="project-overview-heading" className="page-title">
                     {project.name}
@@ -65,15 +65,10 @@ export function ProjectOverview({ project }: ProjectOverviewProps) {
   );
 }
 
-function ProjectAvatar({ name }: { name: string }) {
-  const initial = name.trim().charAt(0).toUpperCase() || "?";
-
+function ProjectAvatar() {
   return (
-    <span
-      className="icon-well-accent h-12 w-12 rounded-xl text-lg font-semibold"
-      aria-hidden="true"
-    >
-      {initial}
+    <span className="icon-well-accent h-12 w-12 rounded-xl" aria-hidden="true">
+      <ProjectIcon size="lg" />
     </span>
   );
 }
