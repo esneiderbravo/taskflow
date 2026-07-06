@@ -1,16 +1,21 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, ClipboardList, GripVertical } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { Task, TaskStatus } from "@/lib/api";
 import { ColumnState } from "@/hooks/useTasks";
 import { formatDate } from "@/lib/format";
-import { StatusBadge } from "@/components/StatusBadge";
+import { TaskIcon } from "@/components/TaskIcon";
+import { TaskStatusIcon } from "@/components/TaskStatusIcon";
 
-const COLUMN_META: Record<TaskStatus, { label: string; dotClass: string }> = {
-  todo: { label: "Ready", dotClass: "bg-status-ready" },
-  in_progress: { label: "In progress", dotClass: "bg-status-active" },
-  done: { label: "Done", dotClass: "bg-status-done" },
+const COLUMN_META: Record<TaskStatus, { label: string; dotClass: string; textClass: string }> = {
+  todo: { label: "Ready", dotClass: "bg-status-ready", textClass: "text-status-ready" },
+  in_progress: {
+    label: "In progress",
+    dotClass: "bg-status-active",
+    textClass: "text-status-active",
+  },
+  done: { label: "Done", dotClass: "bg-status-done", textClass: "text-status-done" },
 };
 
 const STATUS_ORDER: TaskStatus[] = ["todo", "in_progress", "done"];
@@ -50,56 +55,56 @@ function TaskCard({
       className={`kanban-card group ${isDragging ? "kanban-card-dragging" : ""}`}
       aria-grabbed={isDragging}
     >
-      <div className="flex items-start gap-2.5">
-        <button
-          type="button"
-          className="mt-0.5 shrink-0 cursor-grab text-icon opacity-0 transition group-hover:opacity-100 hover:text-accent active:cursor-grabbing"
-          aria-label={`Drag ${task.title}`}
-          tabIndex={-1}
-        >
-          <GripVertical className="h-4 w-4" aria-hidden="true" />
-        </button>
-        <div className="min-w-0 flex-1">
+      <div className="kanban-card-body">
+        <span className="kanban-card-icon" aria-hidden="true">
+          <TaskIcon size="md" />
+        </span>
+        <div className="min-w-0 flex-1 space-y-1">
           {projectName && (
-            <p className="mb-1 truncate text-xs font-medium text-accent">{projectName}</p>
+            <p className="truncate text-[11px] font-medium uppercase tracking-wide text-accent">
+              {projectName}
+            </p>
           )}
-          <h3 className="text-sm font-medium leading-snug text-foreground">{task.title}</h3>
+          <h3 className="text-sm font-semibold leading-snug text-foreground">{task.title}</h3>
           {task.description && (
-            <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-foreground-muted">
+            <p className="line-clamp-2 text-xs leading-relaxed text-foreground-muted">
               {task.description}
             </p>
           )}
-          <p className="mt-2 text-xs text-foreground-muted">{formatDate(task.created_at)}</p>
         </div>
       </div>
 
-      <div className="mt-3 flex items-center justify-between gap-2 border-t border-surface-border pt-3">
-        <StatusBadge status={task.status} />
-        <div className="flex items-center gap-1">
-          {prevStatus && (
-            <button
-              type="button"
-              onClick={() => onStatusChange(task.id, prevStatus)}
-              className="kanban-move-btn"
-              aria-label={`Move ${task.title} to ${COLUMN_META[prevStatus].label}`}
-              title={`Move to ${COLUMN_META[prevStatus].label}`}
-            >
-              <ChevronLeft className="h-3.5 w-3.5" strokeWidth={2} aria-hidden="true" />
-            </button>
-          )}
-          {nextStatus && (
-            <button
-              type="button"
-              onClick={() => onStatusChange(task.id, nextStatus)}
-              className="kanban-move-btn"
-              aria-label={`Move ${task.title} to ${COLUMN_META[nextStatus].label}`}
-              title={`Move to ${COLUMN_META[nextStatus].label}`}
-            >
-              <ChevronRight className="h-3.5 w-3.5" strokeWidth={2} aria-hidden="true" />
-            </button>
-          )}
-        </div>
-      </div>
+      <footer className="kanban-card-footer">
+        <time className="text-[11px] tabular-nums text-foreground-faint">
+          {formatDate(task.created_at)}
+        </time>
+        {(prevStatus || nextStatus) && (
+          <div className="flex items-center gap-0.5">
+            {prevStatus && (
+              <button
+                type="button"
+                onClick={() => onStatusChange(task.id, prevStatus)}
+                className="kanban-move-btn"
+                aria-label={`Move ${task.title} to ${COLUMN_META[prevStatus].label}`}
+                title={`Move to ${COLUMN_META[prevStatus].label}`}
+              >
+                <ChevronLeft className="h-3.5 w-3.5" strokeWidth={2} aria-hidden="true" />
+              </button>
+            )}
+            {nextStatus && (
+              <button
+                type="button"
+                onClick={() => onStatusChange(task.id, nextStatus)}
+                className="kanban-move-btn"
+                aria-label={`Move ${task.title} to ${COLUMN_META[nextStatus].label}`}
+                title={`Move to ${COLUMN_META[nextStatus].label}`}
+              >
+                <ChevronRight className="h-3.5 w-3.5" strokeWidth={2} aria-hidden="true" />
+              </button>
+            )}
+          </div>
+        )}
+      </footer>
     </article>
   );
 }
@@ -165,7 +170,7 @@ export function TaskKanban({
     return (
       <div className="rounded-xl border border-dashed border-surface-border bg-surface-raised px-6 py-12 text-center">
         <div className="mx-auto mb-4 icon-well-accent h-12 w-12 rounded-xl">
-          <ClipboardList className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
+          <TaskIcon size="md" className="h-5 w-5" />
         </div>
         <h3 className="text-base font-semibold text-foreground">{emptyTitle}</h3>
         <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-foreground-muted">
@@ -204,11 +209,9 @@ export function TaskKanban({
             }}
           >
             <header id={`kanban-col-${status}`} className="kanban-column-header">
-              <span className={`h-2 w-2 rounded-full ${meta.dotClass}`} aria-hidden="true" />
+              <TaskStatusIcon status={status} size="md" className={meta.textClass} />
               <span className="text-sm font-semibold text-foreground">{meta.label}</span>
-              <span className="ml-auto text-xs font-medium tabular-nums text-foreground-muted">
-                {column.total}
-              </span>
+              <span className="kanban-column-count">{column.total}</span>
             </header>
 
             <div className="kanban-column-body">
