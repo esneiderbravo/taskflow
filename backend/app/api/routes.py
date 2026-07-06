@@ -2,12 +2,23 @@
 
 from uuid import UUID
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
 from app.api.controllers import ProjectController, TaskController
 from app.database import get_db
-from app.schemas import ProjectCreate, ProjectRead, ProjectUpdate, TaskCreate, TaskRead, TaskUpdate
+from app.models import TaskStatus
+from app.schemas import (
+    PaginatedProjects,
+    PaginatedTasks,
+    ProjectCreate,
+    ProjectDetailRead,
+    ProjectRead,
+    ProjectUpdate,
+    TaskCreate,
+    TaskRead,
+    TaskUpdate,
+)
 
 router = APIRouter()
 
@@ -36,17 +47,25 @@ def task_controller(db: Session = Depends(get_db)) -> TaskController:
     return TaskController(db)
 
 
-@router.get("/projects", response_model=list[ProjectRead])
-def list_projects(controller: ProjectController = Depends(project_controller)) -> list[ProjectRead]:
-    """List all projects.
+@router.get("/projects", response_model=PaginatedProjects)
+def list_projects(
+    search: str | None = Query(default=None, max_length=200),
+    limit: int = Query(default=12, ge=1, le=100),
+    offset: int = Query(default=0, ge=0),
+    controller: ProjectController = Depends(project_controller),
+) -> PaginatedProjects:
+    """List projects with pagination and optional search.
 
     Args:
+        search: Optional case-insensitive name filter.
+        limit: Maximum rows to return.
+        offset: Number of rows to skip.
         controller: Project controller for the current request.
 
     Returns:
-        list[ProjectRead]: All projects ordered by creation date.
+        PaginatedProjects: Matching projects with task counts.
     """
-    return controller.list_projects()
+    return controller.list_projects(search=search, limit=limit, offset=offset)
 
 
 @router.post("/projects", response_model=ProjectRead, status_code=201)
@@ -66,19 +85,19 @@ def create_project(
     return controller.create_project(data)
 
 
-@router.get("/projects/{project_id}", response_model=ProjectRead)
+@router.get("/projects/{project_id}", response_model=ProjectDetailRead)
 def get_project(
     project_id: UUID,
     controller: ProjectController = Depends(project_controller),
-) -> ProjectRead:
-    """Return a project by ID.
+) -> ProjectDetailRead:
+    """Return a project by ID with task counts.
 
     Args:
         project_id: Project primary key.
         controller: Project controller for the current request.
 
     Returns:
-        ProjectRead: Matching project.
+        ProjectDetailRead: Matching project with aggregated task counts.
     """
     return controller.get_project(project_id)
 
@@ -119,21 +138,35 @@ def delete_project(
     controller.delete_project(project_id)
 
 
-@router.get("/projects/{project_id}/tasks", response_model=list[TaskRead])
+@router.get("/projects/{project_id}/tasks", response_model=PaginatedTasks)
 def list_tasks(
     project_id: UUID,
+    search: str | None = Query(default=None, max_length=200),
+    status: TaskStatus | None = Query(default=None),
+    limit: int = Query(default=20, ge=1, le=100),
+    offset: int = Query(default=0, ge=0),
     controller: TaskController = Depends(task_controller),
-) -> list[TaskRead]:
-    """List all tasks for a project.
+) -> PaginatedTasks:
+    """List tasks for a project with pagination and optional filters.
 
     Args:
         project_id: Parent project primary key.
+        search: Optional case-insensitive title/description filter.
+        status: Optional workflow status filter.
+        limit: Maximum rows to return.
+        offset: Number of rows to skip.
         controller: Task controller for the current request.
 
     Returns:
-        list[TaskRead]: Tasks belonging to the project.
+        PaginatedTasks: Matching tasks for the project.
     """
-    return controller.list_tasks(project_id)
+    return controller.list_tasks(
+        project_id,
+        search=search,
+        status=status,
+        limit=limit,
+        offset=offset,
+    )
 
 
 @router.post("/projects/{project_id}/tasks", response_model=TaskRead, status_code=201)

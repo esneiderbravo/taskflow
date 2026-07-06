@@ -2,11 +2,17 @@
 
 from uuid import UUID
 
-from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 from app.managers import ProjectManager
-from app.schemas import ProjectCreate, ProjectRead, ProjectUpdate
+from app.schemas import (
+    PaginatedProjects,
+    ProjectCreate,
+    ProjectDetailRead,
+    ProjectRead,
+    ProjectSummaryRead,
+    ProjectUpdate,
+)
 
 
 class ProjectController:
@@ -20,27 +26,58 @@ class ProjectController:
         """
         self.manager = ProjectManager(db)
 
-    def list_projects(self) -> list[ProjectRead]:
-        """Return all projects as API response models.
+    def list_projects(
+        self,
+        search: str | None = None,
+        limit: int = 12,
+        offset: int = 0,
+    ) -> PaginatedProjects:
+        """Return a paginated list of projects with task counts.
+
+        Args:
+            search: Optional case-insensitive name filter.
+            limit: Maximum rows to return.
+            offset: Number of rows to skip.
 
         Returns:
-            list[ProjectRead]: Every project in the database.
+            PaginatedProjects: Matching projects and pagination metadata.
         """
-        return [ProjectRead.model_validate(p) for p in self.manager.list_all()]
+        rows, total = self.manager.list_paginated(search=search, limit=limit, offset=offset)
+        items = [
+            ProjectSummaryRead(
+                id=project.id,
+                name=project.name,
+                created_at=project.created_at,
+                task_counts=counts,
+            )
+            for project, counts in rows
+        ]
+        return PaginatedProjects(
+            items=items,
+            total=total,
+            task_total=self.manager.count_all_tasks(),
+        )
 
-    def get_project(self, project_id: UUID) -> ProjectRead:
-        """Return a single project as an API response model.
+    def get_project(self, project_id: UUID) -> ProjectDetailRead:
+        """Return a single project with task counts.
 
         Args:
             project_id: Project primary key.
 
         Returns:
-            ProjectRead: Requested project.
+            ProjectDetailRead: Requested project with aggregated counts.
 
         Raises:
             HTTPException: If the project does not exist.
         """
-        return ProjectRead.model_validate(self.manager.get_or_404(project_id))
+        project = self.manager.get_or_404(project_id)
+        counts = self.manager.get_task_counts(project_id)
+        return ProjectDetailRead(
+            id=project.id,
+            name=project.name,
+            created_at=project.created_at,
+            task_counts=counts,
+        )
 
     def create_project(self, data: ProjectCreate) -> ProjectRead:
         """Create a project and return the API response model.

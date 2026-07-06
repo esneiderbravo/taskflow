@@ -3,7 +3,7 @@
 from uuid import UUID
 
 from fastapi import HTTPException
-from sqlalchemy import select
+from sqlalchemy import func, or_, select
 from sqlalchemy.orm import Session
 
 from app.managers.project_manager import ProjectManager
@@ -23,24 +23,48 @@ class TaskManager:
         self.db = db
         self.project_manager = ProjectManager(db)
 
-    def list_by_project(self, project_id: UUID) -> list[Task]:
-        """Return all tasks for a project ordered by creation date.
+    def list_by_project(
+        self,
+        project_id: UUID,
+        search: str | None = None,
+        status: TaskStatus | None = None,
+        limit: int = 20,
+        offset: int = 0,
+    ) -> tuple[list[Task], int]:
+        """Return a paginated slice of tasks for a project.
 
         Args:
             project_id: Parent project primary key.
+            search: Optional case-insensitive title/description filter.
+            status: Optional workflow status filter.
+            limit: Maximum rows to return.
+            offset: Number of rows to skip.
 
         Returns:
-            list[Task]: Tasks belonging to the project.
+            tuple[list[Task], int]: Page of tasks and the total number of matches.
 
         Raises:
             HTTPException: If the parent project does not exist.
         """
         self.project_manager.get_or_404(project_id)
-        return list(
+        filters = [Task.project_id == project_id]
+        if status is not None:
+            filters.append(Task.status == status)
+        if search and search.strip():
+            term = f"%{search.strip()}%"
+            filters.append(or_(Task.title.ilike(term), Task.description.ilike(term)))
+
+        total = self.db.scalar(select(func.count()).select_from(Task).where(*filters)) or 0
+        tasks = list(
             self.db.scalars(
-                select(Task).where(Task.project_id == project_id).order_by(Task.created_at)
+                select(Task)
+                .where(*filters)
+                .order_by(Task.created_at.desc())
+                .limit(limit)
+                .offset(offset)
             ).all()
         )
+        return tasks, int(total)
 
     def get_by_id(self, task_id: UUID) -> Task | None:
         """Return a task by ID.

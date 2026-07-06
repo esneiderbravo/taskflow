@@ -73,7 +73,7 @@ def test_create_project(client: TestClient) -> None:
 
 
 def test_list_projects(client: TestClient) -> None:
-    """Project listing returns all created projects.
+    """Project listing returns paginated results with task totals.
 
     Args:
         client: API test client.
@@ -85,7 +85,55 @@ def test_list_projects(client: TestClient) -> None:
     client.post("/projects", json={"name": "Beta"})
     response = client.get("/projects")
     assert response.status_code == 200
-    assert len(response.json()) == 2
+    data = response.json()
+    assert data["total"] == 2
+    assert len(data["items"]) == 2
+    assert data["task_total"] == 0
+    assert "task_counts" in data["items"][0]
+
+
+def test_list_projects_search(client: TestClient) -> None:
+    """Project search filters by name.
+
+    Args:
+        client: API test client.
+
+    Returns:
+        None
+    """
+    client.post("/projects", json={"name": "Website redesign"})
+    client.post("/projects", json={"name": "Mobile app"})
+    response = client.get("/projects", params={"search": "website"})
+    assert response.status_code == 200
+    data = response.json()
+    assert data["total"] == 1
+    assert data["items"][0]["name"] == "Website redesign"
+
+
+def test_list_tasks_pagination(client: TestClient) -> None:
+    """Task listing supports pagination and status filters.
+
+    Args:
+        client: API test client.
+
+    Returns:
+        None
+    """
+    project = client.post("/projects", json={"name": "Paginated"}).json()
+    for index in range(5):
+        client.post(
+            f"/projects/{project['id']}/tasks",
+            json={"title": f"Task {index}"},
+        )
+
+    response = client.get(
+        f"/projects/{project['id']}/tasks",
+        params={"status": TaskStatus.TODO.value, "limit": 2, "offset": 0},
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data["total"] == 5
+    assert len(data["items"]) == 2
 
 
 def test_create_task(client: TestClient) -> None:
