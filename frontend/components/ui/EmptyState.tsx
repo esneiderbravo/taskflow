@@ -5,8 +5,8 @@ interface EmptyStateProps {
 
 export function EmptyState({ title, description }: EmptyStateProps) {
   return (
-    <div className="rounded-xl border border-dashed border-surface-border bg-surface-raised px-6 py-14 text-center">
-      <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-page text-foreground-faint">
+    <div className="rounded-xl border border-dashed border-surface-border bg-surface-raised px-6 py-12 text-center">
+      <div className="mx-auto mb-4 icon-well-accent h-12 w-12 rounded-xl">
         <svg
           className="h-5 w-5"
           fill="none"
@@ -18,12 +18,14 @@ export function EmptyState({ title, description }: EmptyStateProps) {
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+            d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z"
           />
         </svg>
       </div>
-      <h3 className="font-display text-base font-semibold text-foreground">{title}</h3>
-      <p className="mx-auto mt-2 max-w-xs text-sm leading-relaxed text-foreground-muted">{description}</p>
+      <h3 className="text-base font-semibold text-foreground">{title}</h3>
+      <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-foreground-muted">
+        {description}
+      </p>
     </div>
   );
 }

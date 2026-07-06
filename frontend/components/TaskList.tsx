@@ -28,32 +28,40 @@ export function TaskForm({ onSubmit }: TaskFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="card space-y-3 p-5">
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Task title"
-        aria-label="Task title"
-        className="input-field"
-      />
-      <input
-        type="text"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        placeholder="Description (optional)"
-        aria-label="Task description"
-        className="input-field"
-      />
-      <div className="pt-1">
-        <button
-          type="submit"
-          disabled={submitting || !title.trim()}
-          className="btn-primary"
-        >
-          {submitting ? "Adding…" : "Add task"}
-        </button>
+    <form onSubmit={handleSubmit} className="card space-y-4 p-5">
+      <div>
+        <label htmlFor="task-title" className="block text-sm font-medium text-foreground">
+          Title
+        </label>
+        <input
+          id="task-title"
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="What needs to be done?"
+          className="input-field mt-2"
+        />
       </div>
+      <div>
+        <label htmlFor="task-description" className="block text-sm font-medium text-foreground">
+          Description <span className="font-normal text-foreground-faint">(optional)</span>
+        </label>
+        <input
+          id="task-description"
+          type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Add context or acceptance criteria"
+          className="input-field mt-2"
+        />
+      </div>
+      <button
+        type="submit"
+        disabled={submitting || !title.trim()}
+        className="btn-primary"
+      >
+        {submitting ? "Adding…" : "Add task"}
+      </button>
     </form>
   );
 }
@@ -68,7 +76,7 @@ export function TaskList({ tasks, onStatusChange }: TaskListProps) {
     return (
       <EmptyState
         title="No tasks yet"
-        description="Add a task above to start tracking work on this project."
+        description="Add a task above to start tracking work."
       />
     );
   }
@@ -78,7 +86,7 @@ export function TaskList({ tasks, onStatusChange }: TaskListProps) {
       {tasks.map((task) => (
         <li
           key={task.id}
-          className="card group flex flex-col gap-4 p-4 transition hover:border-accent/15 hover:bg-surface-hover sm:flex-row sm:items-start sm:justify-between"
+          className="card flex flex-col gap-4 p-4 transition hover:border-accent/15 sm:flex-row sm:items-start sm:justify-between"
         >
           <div className="min-w-0 flex-1">
             <h3 className="font-medium text-foreground">{task.title}</h3>

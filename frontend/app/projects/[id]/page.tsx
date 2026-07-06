@@ -1,14 +1,14 @@
 "use client";
 
-import Link from "next/link";
 import { use } from "react";
 import { useEffect, useState } from "react";
-import { TaskForm, TaskList } from "@/components/TaskList";
-import { TaskProgress } from "@/components/TaskProgress";
+import { AddTaskModal } from "@/components/AddTaskModal";
+import { TaskKanban } from "@/components/TaskKanban";
+import { ProjectOverview } from "@/components/ProjectOverview";
+import { SearchField } from "@/components/ui/SearchField";
 import { ProjectDetailSkeleton } from "@/components/ui/Skeleton";
-import { useTasks } from "@/hooks/useTasks";
-import { api, Project } from "@/lib/api";
-import { formatDate } from "@/lib/format";
+import { useProjectBoard } from "@/hooks/useTasks";
+import { api, ProjectDetail } from "@/lib/api";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -16,10 +16,20 @@ interface PageProps {
 
 export default function ProjectDetailPage({ params }: PageProps) {
   const { id } = use(params);
-  const [project, setProject] = useState<Project | null>(null);
+  const [project, setProject] = useState<ProjectDetail | null>(null);
   const [projectError, setProjectError] = useState<string | null>(null);
   const [projectLoading, setProjectLoading] = useState(true);
-  const { tasks, loading, error, createTask, updateTaskStatus } = useTasks(id);
+  const [addTaskOpen, setAddTaskOpen] = useState(false);
+  const {
+    columns,
+    search,
+    setSearch,
+    loading,
+    error,
+    createTask,
+    updateTaskStatus,
+    loadMore,
+  } = useProjectBoard(id);
 
   useEffect(() => {
     setProjectLoading(true);
@@ -29,16 +39,24 @@ export default function ProjectDetailPage({ params }: PageProps) {
       .finally(() => setProjectLoading(false));
   }, [id]);
 
+  const refreshProjectCounts = () => {
+    api.getProject(id).then(setProject).catch(() => undefined);
+  };
+
+  const handleStatusChange = async (taskId: string, status: Parameters<typeof updateTaskStatus>[1]) => {
+    await updateTaskStatus(taskId, status);
+    refreshProjectCounts();
+  };
+
+  const handleCreateTask = async (title: string, description?: string) => {
+    await createTask(title, description);
+    refreshProjectCounts();
+  };
+
   if (projectError) {
     return (
       <div className="space-y-6 animate-fade-up">
-        <Link href="/" className="back-link">
-          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-          </svg>
-          All projects
-        </Link>
-        <div className="card border-status-danger/20 bg-red-50 p-6">
+        <div className="alert-danger p-6">
           <h2 className="font-semibold text-status-danger">Project not found</h2>
           <p className="mt-2 text-sm text-foreground-muted">{projectError}</p>
         </div>
@@ -50,49 +68,60 @@ export default function ProjectDetailPage({ params }: PageProps) {
     return <ProjectDetailSkeleton />;
   }
 
+  const totalTasks =
+    project.task_counts.todo + project.task_counts.in_progress + project.task_counts.done;
+
   return (
     <div className="space-y-10 animate-fade-up">
-      <header className="space-y-4">
-        <Link href="/" className="back-link">
-          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-          </svg>
-          All projects
-        </Link>
-        <div>
-          <h1 className="page-title">{project.name}</h1>
-          <p className="mt-2 font-mono text-xs text-foreground-faint">
-            Created {formatDate(project.created_at)}
-          </p>
-        </div>
-      </header>
-
-      <TaskProgress tasks={tasks} />
+      <ProjectOverview project={project} />
 
       {error && (
-        <div className="card border-status-danger/20 bg-red-50 p-4 text-sm text-status-danger">
+        <div className="alert-danger p-4 text-sm text-status-danger">
           {error}
         </div>
       )}
 
-      <section aria-labelledby="add-task-heading" className="space-y-4">
-        <h2 id="add-task-heading" className="section-heading">
-          Add task
-        </h2>
-        <TaskForm onSubmit={async (title, description) => { await createTask(title, description); }} />
+      <section aria-labelledby="board-heading" className="space-y-4">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <h2 id="board-heading" className="section-heading">
+              Task board
+            </h2>
+            {totalTasks > 0 && (
+              <p className="mt-1 section-label">
+                {totalTasks} tasks · {search ? "filtered results" : "latest per column"}
+              </p>
+            )}
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            {totalTasks > 0 && (
+              <div className="w-full sm:w-56">
+                <SearchField
+                  label="Search tasks"
+                  value={search}
+                  onChange={setSearch}
+                  placeholder="Search tasks…"
+                />
+              </div>
+            )}
+            <button type="button" onClick={() => setAddTaskOpen(true)} className="btn-primary shrink-0">
+              Add task
+            </button>
+          </div>
+        </div>
+        <TaskKanban
+          columns={columns}
+          onStatusChange={handleStatusChange}
+          onLoadMore={loadMore}
+          onAddTask={() => setAddTaskOpen(true)}
+        />
       </section>
 
-      <section aria-labelledby="tasks-heading" className="space-y-4">
-        <div className="flex items-baseline justify-between">
-          <h2 id="tasks-heading" className="section-heading">
-            Tasks
-          </h2>
-          {tasks.length > 0 && (
-            <span className="font-mono text-xs text-foreground-faint">{tasks.length} total</span>
-          )}
-        </div>
-        <TaskList tasks={tasks} onStatusChange={async (taskId, status) => { await updateTaskStatus(taskId, status); }} />
-      </section>
+      <AddTaskModal
+        open={addTaskOpen}
+        onClose={() => setAddTaskOpen(false)}
+        onSubmit={handleCreateTask}
+      />
     </div>
   );
 }

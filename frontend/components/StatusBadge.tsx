@@ -3,15 +3,15 @@ import { TaskStatus } from "@/lib/api";
 const STATUS_CONFIG: Record<TaskStatus, { label: string; className: string }> = {
   todo: {
     label: "Ready",
-    className: "bg-slate-100 text-status-ready border-slate-200",
+    className: "bg-status-ready/15 text-status-ready border-status-ready/30",
   },
   in_progress: {
     label: "In progress",
-    className: "bg-amber-50 text-status-active border-amber-200",
+    className: "bg-status-active/15 text-status-active border-status-active/30",
   },
   done: {
     label: "Done",
-    className: "bg-emerald-50 text-status-done border-emerald-200",
+    className: "bg-status-done/15 text-status-done border-status-done/30",
   },
 };
 
@@ -23,8 +23,9 @@ export function StatusBadge({ status }: StatusBadgeProps) {
   const config = STATUS_CONFIG[status];
   return (
     <span
-      className={`inline-flex items-center rounded-md border px-2 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wide ${config.className}`}
+      className={`inline-flex items-center gap-1.5 rounded-md border px-2 py-0.5 text-xs font-medium ${config.className}`}
     >
+      <span className="h-1.5 w-1.5 rounded-full bg-current opacity-70" aria-hidden="true" />
       {config.label}
     </span>
   );
