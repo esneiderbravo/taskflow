@@ -13,7 +13,7 @@ API and frontend on your machine with hot reload. PostgreSQL runs in Docker. Pyt
 **macOS / Linux**
 
 ```bash
-make dev
+npm run dev
 ```
 
 **Windows (PowerShell)**
@@ -51,13 +51,13 @@ Save a file and refresh — no rebuild needed.
 
 | Action | macOS / Linux | Windows (PowerShell) |
 | ------ | ------------- | -------------------- |
-| Start app | `make dev` | `.\scripts\dev-local.ps1` |
-| PostgreSQL only | `make dev-db` | `docker compose up db -d` |
-| Apply migrations | `make dev-migrate` | `cd backend; conda run -n task-flow alembic upgrade head` |
-| New migration | `make dev-migrate-create MSG="..."` | `cd backend; conda run -n task-flow alembic revision --autogenerate -m "..."` |
-| Run tests | `make dev-test` | See below |
-| Reset database | `make dev-reset` | `docker compose down -v; docker compose up db -d` then migrate |
-| Stop Docker | `make down` | `docker compose down` |
+| Start app | `npm run dev` | `.\scripts\dev-local.ps1` |
+| PostgreSQL only | `npm run dev:db` | `docker compose up db -d` |
+| Apply migrations | `npm run migrate` | `cd backend; conda run -n task-flow alembic upgrade head` |
+| New migration | `MSG="..." npm run dev:migrate:create` | `cd backend; conda run -n task-flow alembic revision --autogenerate -m "..."` |
+| Run tests | `npm test` | See below |
+| Reset database | `npm run dev:reset` | `docker compose down -v; docker compose up db -d` then migrate |
+| Stop Docker | `npm run docker:down` | `docker compose down` |
 
 **Windows — run tests:**
 

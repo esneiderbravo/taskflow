@@ -23,6 +23,7 @@ describe("ProjectCard", () => {
           id: "abc-123",
           name: "Web App Launch",
           created_at: "2026-01-15T10:00:00Z",
+          task_counts: { todo: 1, in_progress: 0, done: 2 },
         }}
       />
     );

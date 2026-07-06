@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: "class",
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,29 +9,34 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        page: "#f4f7fb",
+        page: "rgb(var(--color-page) / <alpha-value>)",
         foreground: {
-          DEFAULT: "#0f172a",
-          muted: "#475569",
-          faint: "#94a3b8",
+          DEFAULT: "rgb(var(--color-foreground) / <alpha-value>)",
+          muted: "rgb(var(--color-foreground-muted) / <alpha-value>)",
+          faint: "rgb(var(--color-foreground-faint) / <alpha-value>)",
         },
+        icon: "rgb(var(--color-icon) / <alpha-value>)",
         surface: {
-          DEFAULT: "#f4f7fb",
-          raised: "#ffffff",
-          hover: "#f8fafc",
-          border: "#e2e8f0",
-          input: "#ffffff",
+          DEFAULT: "rgb(var(--color-surface) / <alpha-value>)",
+          raised: "rgb(var(--color-surface-raised) / <alpha-value>)",
+          hover: "rgb(var(--color-surface-hover) / <alpha-value>)",
+          border: "rgb(var(--color-surface-border) / <alpha-value>)",
+          input: "rgb(var(--color-surface-input) / <alpha-value>)",
         },
         accent: {
-          DEFAULT: "#2563eb",
-          light: "#3b82f6",
-          dim: "#1d4ed8",
+          DEFAULT: "rgb(var(--color-accent) / <alpha-value>)",
+          light: "rgb(var(--color-accent-light) / <alpha-value>)",
+          dim: "rgb(var(--color-accent-dim) / <alpha-value>)",
         },
+        "workshop-gold": "#d97706",
+        "workshop-gold-light": "#f59e0b",
+        "workshop-emerald": "#059669",
+        "workshop-ruby": "#be123c",
         status: {
-          ready: "#64748b",
-          active: "#d97706",
-          done: "#059669",
-          danger: "#e11d48",
+          ready: "rgb(var(--color-status-ready) / <alpha-value>)",
+          active: "rgb(var(--color-status-active) / <alpha-value>)",
+          done: "rgb(var(--color-status-done) / <alpha-value>)",
+          danger: "rgb(var(--color-status-danger) / <alpha-value>)",
         },
       },
       fontFamily: {
@@ -39,14 +45,13 @@ const config: Config = {
         mono: ["var(--font-jetbrains)", "ui-monospace", "monospace"],
       },
       boxShadow: {
-        card: "0 1px 2px rgba(15, 23, 42, 0.04), 0 0 0 1px rgba(226, 232, 240, 0.9)",
-        "card-hover":
-          "0 8px 24px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(37, 99, 235, 0.12)",
-        header: "0 1px 0 rgba(226, 232, 240, 0.9)",
+        card: "var(--shadow-card)",
+        "card-hover": "var(--shadow-card-hover)",
+        header: "var(--shadow-header)",
       },
       animation: {
         shimmer: "shimmer 2s ease-in-out infinite",
-        "fade-up": "fade-up 0.45s cubic-bezier(0.16, 1, 0.3, 1) both",
+        "fade-up": "fade-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both",
       },
       keyframes: {
         shimmer: {

@@ -16,16 +16,13 @@ OpenSpec and constitution are pre-configured — no `openspec init` needed.
 | `openspec/constitution/` | Project standards injected into every change |
 | [AGENTS.md](../AGENTS.md) | Rules agents follow when implementing |
 
-Install once (from the repo root):
+Install once:
 
 ```bash
-npm install
 npm install -g @fission-ai/openspec@latest
 npm install -g @colbymchenry/codegraph
 codegraph init
 ```
-
-`npm install` installs workshop dependencies (`ui-ux-pro-max-cli`) for the design skills in `ai-agents/skills/`.
 
 Reload Cursor MCP after `codegraph init` (**Settings → MCP**). Config: `ai-agents/mcp.json`.
 
