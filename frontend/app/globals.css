@@ -186,11 +186,15 @@ body {
   }
 
   .kanban-column-header {
-    @apply flex items-center gap-2.5 border-b border-surface-border px-4 py-3;
+    @apply flex items-center gap-2 border-b border-surface-border px-4 py-3;
+  }
+
+  .kanban-column-count {
+    @apply ml-auto inline-flex min-w-[1.5rem] items-center justify-center rounded-md bg-page px-1.5 py-0.5 text-xs font-semibold tabular-nums text-foreground-muted;
   }
 
   .kanban-column-body {
-    @apply flex flex-1 flex-col gap-2 p-3;
+    @apply flex flex-1 flex-col gap-2.5 p-3;
   }
 
   .kanban-column-empty {
@@ -198,15 +202,35 @@ body {
   }
 
   .kanban-card {
-    @apply cursor-grab rounded-lg border border-surface-border bg-surface-raised p-3.5 shadow-sm transition active:cursor-grabbing hover:border-accent/15 hover:shadow-card;
+    @apply flex cursor-grab flex-col overflow-hidden rounded-xl border border-surface-border bg-surface-raised shadow-sm transition active:cursor-grabbing hover:border-accent/20 hover:shadow-card;
+  }
+
+  .kanban-card-body {
+    @apply flex items-start gap-3 p-3.5;
+  }
+
+  .kanban-card-icon {
+    @apply flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent;
+  }
+
+  .dark .kanban-card-icon {
+    @apply bg-accent/15 text-accent-light;
+  }
+
+  .kanban-card-footer {
+    @apply flex items-center justify-between gap-2 border-t border-surface-border/80 bg-page/50 px-3.5 py-2;
+  }
+
+  .dark .kanban-card-footer {
+    @apply bg-page/30;
   }
 
   .kanban-card-dragging {
-    @apply scale-[0.98] border-accent/25 opacity-55 shadow-none;
+    @apply scale-[0.98] border-accent/30 opacity-60 shadow-none ring-2 ring-accent/20;
   }
 
   .kanban-move-btn {
-    @apply inline-flex h-7 w-7 items-center justify-center rounded-md border border-surface-border bg-page text-icon transition hover:border-accent/20 hover:bg-accent/5 hover:text-accent;
+    @apply inline-flex h-7 w-7 items-center justify-center rounded-md border border-surface-border bg-surface-raised text-icon transition hover:border-accent/25 hover:bg-accent/5 hover:text-accent;
   }
 
   .modal-dialog {

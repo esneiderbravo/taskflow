@@ -1,4 +1,5 @@
 import { TaskStatus } from "@/lib/api";
+import { TaskStatusIcon } from "@/components/TaskStatusIcon";
 
 const STATUS_CONFIG: Record<TaskStatus, { label: string; className: string }> = {
   todo: {
@@ -25,7 +26,7 @@ export function StatusBadge({ status }: StatusBadgeProps) {
     <span
       className={`inline-flex items-center gap-1.5 rounded-md border px-2 py-0.5 text-xs font-medium ${config.className}`}
     >
-      <span className="h-1.5 w-1.5 rounded-full bg-current opacity-70" aria-hidden="true" />
+      <TaskStatusIcon status={status} size="sm" />
       {config.label}
     </span>
   );

@@ -1,29 +1,49 @@
-import { TaskCounts } from "@/lib/api";
+import { ClipboardList } from "lucide-react";
+import { TaskCounts, TaskStatus } from "@/lib/api";
+import { TaskStatusIcon } from "@/components/TaskStatusIcon";
 
 interface TaskMetricsProps {
   taskCounts: TaskCounts;
   variant?: "default" | "compact";
 }
 
+const SEGMENTS: {
+  status: TaskStatus;
+  key: keyof TaskCounts;
+  color: string;
+  textClass: string;
+  label: string;
+}[] = [
+  { status: "done", key: "done", color: "bg-status-done", textClass: "text-status-done", label: "Done" },
+  {
+    status: "in_progress",
+    key: "in_progress",
+    color: "bg-status-active",
+    textClass: "text-status-active",
+    label: "In progress",
+  },
+  { status: "todo", key: "todo", color: "bg-status-ready/70", textClass: "text-status-ready", label: "Ready" },
+];
+
 export function TaskMetrics({ taskCounts, variant = "default" }: TaskMetricsProps) {
   const { todo, in_progress: inProgress, done } = taskCounts;
   const total = todo + inProgress + done;
   const percent = total > 0 ? Math.round((done / total) * 100) : 0;
-
-  const segments = [
-    { count: done, color: "bg-status-done", label: "Done" },
-    { count: inProgress, color: "bg-status-active", label: "In progress" },
-    { count: todo, color: "bg-status-ready/70", label: "Ready" },
-  ];
 
   if (variant === "compact") {
     return (
       <div className="flex items-center gap-3">
         <ProgressRing percent={percent} size={44} stroke={4} />
         <div className="grid grid-cols-3 gap-3 text-center">
-          <MetricPill label="Ready" value={todo} className="text-status-ready" />
-          <MetricPill label="Active" value={inProgress} className="text-status-active" />
-          <MetricPill label="Done" value={done} className="text-status-done" />
+          {SEGMENTS.map((seg) => (
+            <MetricPill
+              key={seg.label}
+              status={seg.status}
+              label={seg.label}
+              value={taskCounts[seg.key]}
+              className={seg.textClass}
+            />
+          ))}
         </div>
       </div>
     );
@@ -34,7 +54,10 @@ export function TaskMetrics({ taskCounts, variant = "default" }: TaskMetricsProp
       <div className="flex items-center gap-5">
         <ProgressRing percent={percent} size={72} stroke={5} />
         <div>
-          <p className="text-sm font-medium text-foreground-muted">Completion</p>
+          <p className="flex items-center gap-1.5 text-sm font-medium text-foreground-muted">
+            <ClipboardList className="h-4 w-4 text-icon" strokeWidth={2} aria-hidden="true" />
+            Completion
+          </p>
           <p className="mt-0.5 text-3xl font-semibold tabular-nums text-foreground">
             {percent}
             <span className="text-lg font-normal text-foreground-faint">%</span>
@@ -48,13 +71,13 @@ export function TaskMetrics({ taskCounts, variant = "default" }: TaskMetricsProp
       <div className="flex flex-1 flex-col gap-4 sm:border-l sm:border-surface-border sm:pl-6">
         <div className="flex h-2.5 overflow-hidden rounded-full bg-surface-border">
           {total > 0 ? (
-            segments.map(
+            SEGMENTS.map(
               (seg) =>
-                seg.count > 0 && (
+                taskCounts[seg.key] > 0 && (
                   <div
                     key={seg.label}
                     className={`${seg.color} transition-all duration-300`}
-                    style={{ width: `${(seg.count / total) * 100}%` }}
+                    style={{ width: `${(taskCounts[seg.key] / total) * 100}%` }}
                   />
                 )
             )
@@ -64,11 +87,14 @@ export function TaskMetrics({ taskCounts, variant = "default" }: TaskMetricsProp
         </div>
 
         <dl className="grid grid-cols-3 gap-4">
-          {segments.map((seg) => (
+          {SEGMENTS.map((seg) => (
             <div key={seg.label}>
-              <dt className="text-xs text-foreground-muted">{seg.label}</dt>
+              <dt className="flex items-center gap-1.5 text-xs text-foreground-muted">
+                <TaskStatusIcon status={seg.status} className={seg.textClass} />
+                {seg.label}
+              </dt>
               <dd className="mt-0.5 text-lg font-semibold tabular-nums text-foreground">
-                {seg.count}
+                {taskCounts[seg.key]}
               </dd>
             </div>
           ))}
@@ -79,17 +105,20 @@ export function TaskMetrics({ taskCounts, variant = "default" }: TaskMetricsProp
 }
 
 function MetricPill({
+  status,
   label,
   value,
   className,
 }: {
+  status: TaskStatus;
   label: string;
   value: number;
   className: string;
 }) {
   return (
     <div>
-      <p className="text-[10px] font-medium uppercase tracking-wide text-foreground-muted">
+      <p className="flex items-center justify-center gap-1 text-[10px] font-medium uppercase tracking-wide text-foreground-muted">
+        <TaskStatusIcon status={status} className={className} />
         {label}
       </p>
       <p className={`mt-0.5 text-sm font-semibold tabular-nums ${className}`}>{value}</p>
