@@ -32,12 +32,22 @@ git checkout workshop/vibe-coding
 
 ### 3. Prerequisites
 
-- [Docker](https://docs.docker.com/get-docker/)
-- [Miniconda](https://www.anaconda.com/download/success) (Python 3.12)
+Local development needs **Docker for PostgreSQL** and a **ready conda env** before you start the app:
+
+- [Docker](https://docs.docker.com/get-docker/) installed and **running** — used only for the database (`db` container)
+- Conda env **`task-flow` already created** from `environment.yml` (see below)
 - [Node.js](https://nodejs.org/) (LTS)
+- [Miniconda](https://www.anaconda.com/download/success) (Python 3.12) — to create/use `task-flow`
 - An AI IDE with agent support (Cursor, Claude Code, etc.)
 
-Details: [local-development.md](./local-development.md)
+Create the conda environment once:
+
+```bash
+conda env create -f environment.yml
+conda activate task-flow
+```
+
+Confirm Docker is up (`docker info`) and the env exists (`conda env list`). Full details: [local-development.md](./local-development.md).
 
 ### 4. Start the app
 
@@ -53,7 +63,7 @@ make dev
 .\scripts\dev-local.ps1
 ```
 
-First run creates the `task-flow` conda env, installs dependencies, and copies `.env` if missing.
+This starts PostgreSQL in Docker, applies migrations, and runs API + frontend with hot reload. First run also installs dependencies and copies `.env` if missing.
 
 ### 5. Verify it works
 
