@@ -6,6 +6,8 @@ Full-stack project and task manager for the **PyCon 2026** workshop. Next.js · 
 
 ## Quick start
 
+**Before the first run:** Docker must be running (PostgreSQL only), and the conda env `task-flow` must already exist (`conda env create -f environment.yml`). Details: [guide/local-development.md](guide/local-development.md).
+
 **macOS / Linux**
 
 ```bash
