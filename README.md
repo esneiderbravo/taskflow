@@ -4,6 +4,8 @@ Full-stack project and task manager for the **PyCon 2026** workshop. Next.js · 
 
 ## Quick start
 
+**Before the first run:** Docker must be running (PostgreSQL only), and the conda env `task-flow` must already exist (`conda env create -f environment.yml`). Details: [guide/local-development.md](guide/local-development.md).
+
 **macOS / Linux**
 
 ```bash
@@ -26,6 +28,6 @@ Open [http://localhost:3000](http://localhost:3000) · API docs at [http://local
 
 Detailed setup and workflows live in **[guide/](guide/README.md)**:
 
-- [Local development](guide/local-development.md) — hot reload
+- [Local development](guide/local-development.md) — hot reload (Docker for DB + ready `task-flow` conda env)
 - [Docker](guide/docker.md) — full stack in containers
 - [Workshop](guide/workshop.md) — vibe coding & SDD tracks
