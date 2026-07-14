@@ -2,7 +2,7 @@
   "name": "taskflow",
   "version": "0.1.0",
   "private": true,
-  "description": "PyCon 2026 workshop — full Docker stack (OS-independent).",
+  "description": "PyCon 2026 workshop — TaskFlow.",
   "scripts": {
     "up": "docker compose up --build -d",
     "down": "docker compose down",

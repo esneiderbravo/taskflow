@@ -3,7 +3,7 @@
 MSG ?=
 
 help:
-	@echo "TaskFlow — full Docker only (workshop)"
+	@echo "TaskFlow"
 	@echo ""
 	@echo "  make up                 Start/rebuild stack (db + backend + frontend)"
 	@echo "  make down               Stop containers"
@@ -15,8 +15,6 @@ help:
 	@echo ""
 	@echo "After code changes:  make up && make logs"
 	@echo "After branch switch: make down && git checkout <branch> && make reset"
-
-# --- Full Docker stack ---
 
 up:
 	docker compose up --build -d

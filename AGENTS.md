@@ -81,7 +81,7 @@ make up
 
 Seed data goes in a **separate** Alembic migration, not in Python scripts.
 
-## Development commands (full Docker only)
+## Development commands
 
 Run mode: [guide/docker.md](guide/docker.md). After code edits, always `make up` (rebuild) — not hot reload.
 

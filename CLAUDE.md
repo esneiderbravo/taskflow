@@ -41,7 +41,7 @@ make up
 | Manager | Logic + DB | HTTP concerns |
 | Model | Schema definition | API shapes |
 
-## Quick commands (full Docker only)
+## Quick commands
 
 ```bash
 make up               # Start / rebuild stack
