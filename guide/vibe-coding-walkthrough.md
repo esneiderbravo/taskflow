@@ -32,38 +32,28 @@ git checkout workshop/vibe-coding
 
 ### 3. Prerequisites
 
-Local development needs **Docker for PostgreSQL** and a **ready conda env** before you start the app:
+Workshop runtime is **full Docker only** (no conda, Node, or Python on the host for the app):
 
-- [Docker](https://docs.docker.com/get-docker/) installed and **running** — used only for the database (`db` container)
-- Conda env **`task-flow` already created** from `environment.yml` (see below)
-- [Node.js](https://nodejs.org/) (LTS)
-- [Miniconda](https://www.anaconda.com/download/success) (Python 3.12) — to create/use `task-flow`
+- [Docker](https://docs.docker.com/get-docker/) installed and **running** (`docker info`)
 - An AI IDE with agent support (Cursor, Claude Code, etc.)
 
-Create the conda environment once:
-
-```bash
-conda env create -f environment.yml
-conda activate task-flow
-```
-
-Confirm Docker is up (`docker info`) and the env exists (`conda env list`). Full details: [local-development.md](./local-development.md).
+Confirm Docker is up. Full details: [docker.md](./docker.md).
 
 ### 4. Start the app
 
 **macOS / Linux**
 
 ```bash
-make dev
+make up
 ```
 
 **Windows (PowerShell)**
 
 ```powershell
-.\scripts\dev-local.ps1
+docker compose up --build -d
 ```
 
-This starts PostgreSQL in Docker, applies migrations, and runs API + frontend with hot reload. First run also installs dependencies and copies `.env` if missing.
+This builds and starts `db`, `backend`, and `frontend` in containers (~90s first time).
 
 ### 5. Verify it works
 
@@ -74,7 +64,7 @@ This starts PostgreSQL in Docker, applies migrations, and runs API + frontend wi
 
 Browse projects and tasks. There are no task dependencies yet — that is what you will build.
 
-Keep the dev server running in a terminal (or restart it before testing later).
+**After any code change:** rebuild with `make up` and watch `make logs` until the backend is up — containers do not hot-reload.
 
 ---
 
@@ -113,16 +103,21 @@ Let the agent explore the codebase and implement the feature. It will decide arc
 **macOS / Linux**
 
 ```bash
-make dev-test
+make test
 ```
 
-**Windows** — see [local-development.md](./local-development.md) § Run tests.
+**Windows (PowerShell)**
 
-Fix failures with the agent until tests pass.
+```powershell
+docker compose exec backend pytest -v
+docker compose exec frontend npm test -- --run
+```
+
+Fix failures with the agent until tests pass. After agent code edits, rebuild first (`make up`).
 
 ### 10. Verify in the browser
 
-With `make dev` running:
+After rebuild (`make up`), with the stack running:
 
 1. Open a project at [http://localhost:3000](http://localhost:3000)
 2. Create dependencies between tasks
@@ -161,14 +156,14 @@ Discuss: what did vibe coding miss or guess wrong? What did SDD get right from a
 | ---- | ------ |
 | Input | `guide/user-story-task-dependencies.md` |
 | Prompt | `Implement the feature described in guide/user-story-task-dependencies.md.` |
-| Test | `make dev-test` |
+| Test | `make test` |
+| Rebuild after edits | `make up && make logs` |
 
 ## Related guides
 
 | Guide | When |
 | ----- | ---- |
-| [local-development.md](./local-development.md) | Dev server, migrations, tests |
-| [docker.md](./docker.md) | Full stack in containers |
+| [docker.md](./docker.md) | Run, rebuild after edits, migrate, reset, switch branches |
 | [workshop.md](./workshop.md) | Vibe coding summary |
 | [compare.md](./compare.md) | Debrief diff commands |
 

@@ -6,19 +6,23 @@ Spec: [user-story-task-dependencies.md](./user-story-task-dependencies.md)
 
 ## Quick start
 
+**Only requirement:** Docker running. See [docker.md](./docker.md).
+
 **macOS / Linux**
 
 ```bash
 git checkout workshop/vibe-coding
-make dev
+make up
 ```
 
 **Windows (PowerShell)**
 
 ```powershell
 git checkout workshop/vibe-coding
-.\scripts\dev-local.ps1
+docker compose up --build -d
 ```
+
+After code changes: `make up && make logs` (rebuild — not hot reload).
 
 ## Workflow
 
