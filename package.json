@@ -2,22 +2,14 @@
   "name": "taskflow",
   "version": "0.1.0",
   "private": true,
-  "description": "PyCon 2026 workshop — local dev scripts (macOS/Linux).",
+  "description": "PyCon 2026 workshop — full Docker stack (OS-independent).",
   "scripts": {
-    "dev": "bash scripts/dev-local.sh",
-    "dev:db": "docker compose up db -d",
-    "dev:backend": "cd backend && conda run -n task-flow uvicorn app.main:app --reload --host 0.0.0.0 --port 8000",
-    "dev:frontend": "cd frontend && npm run dev",
-    "dev:migrate": "cd backend && conda run -n task-flow alembic upgrade head",
-    "dev:migrate:create": "bash -c 'test -n \"${MSG}\" || (echo \"Usage: MSG=\\\"describe change\\\" npm run dev:migrate:create\" && exit 1); cd backend && conda run -n task-flow alembic revision --autogenerate -m \"${MSG}\"'",
-    "dev:test": "cd backend && conda run -n task-flow pytest -v && cd ../frontend && npm test -- --run",
-    "dev:reset": "docker compose down -v && docker compose up db -d && cd backend && conda run -n task-flow alembic upgrade head",
-    "test": "npm run dev:test",
-    "migrate": "npm run dev:migrate",
-    "docker:up": "docker compose up --build -d",
-    "docker:down": "docker compose down",
-    "docker:test": "docker compose exec backend pytest -v && docker compose exec frontend npm test -- --run",
-    "docker:migrate": "docker compose exec backend alembic upgrade head",
-    "docker:reset": "docker compose down -v && docker compose up --build -d"
+    "up": "docker compose up --build -d",
+    "down": "docker compose down",
+    "logs": "docker compose logs -f",
+    "test": "docker compose exec backend pytest -v && docker compose exec frontend npm test -- --run",
+    "migrate": "docker compose exec backend alembic upgrade head",
+    "migrate:create": "bash -c 'test -n \"${MSG}\" || (echo \"Usage: MSG=\\\"describe change\\\" npm run migrate:create\" && exit 1); docker compose run --rm -v \"$$(pwd)/backend/app:/app/app\" -v \"$$(pwd)/backend/alembic:/app/alembic\" backend alembic revision --autogenerate -m \"${MSG}\"'",
+    "reset": "docker compose down -v && docker compose up --build -d"
   }
 }
