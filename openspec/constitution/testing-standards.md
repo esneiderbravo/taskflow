@@ -7,8 +7,8 @@
 **Run:**
 
 ```bash
-make dev-test          # macOS/Linux — backend + frontend
-cd backend && conda run -n task-flow pytest -v   # backend only
+make test                                          # backend + frontend in containers
+docker compose exec backend pytest -v              # backend only
 ```
 
 ### Patterns
@@ -41,7 +41,8 @@ def test_get_dependency_graph(client):
 **Run:**
 
 ```bash
-cd frontend && npm test -- --run
+docker compose exec frontend npm test -- --run
+# or: make test
 ```
 
 ### Patterns
@@ -60,6 +61,6 @@ cd frontend && npm test -- --run
 
 Every feature must end with:
 
-- [ ] `make dev-test` passes (or equivalent Windows commands)
+- [ ] `make test` passes (or Windows `docker compose exec` equivalents)
 - [ ] New backend tests for each FR with API impact
 - [ ] New frontend tests for each UI requirement in the spec

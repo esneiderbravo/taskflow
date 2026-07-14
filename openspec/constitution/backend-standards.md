@@ -1,6 +1,6 @@
 # Backend standards
 
-Python 3.12 · FastAPI · SQLAlchemy 2.0 · conda env `task-flow`
+Python 3.12 · FastAPI · SQLAlchemy 2.0 · runs in Docker (`backend` service)
 
 ## File layout
 

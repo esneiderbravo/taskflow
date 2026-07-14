@@ -15,10 +15,11 @@ context: |
   NON-NEGOTIABLE:
   - CodeGraph FIRST: use codegraph_explore / codegraph_node MCP (or CLI) before any grep, search, or broad file reads. Do not explore the codebase on your own — reduces tokens.
   - Backend: routes → controller → manager → model. Business logic in managers only.
-  - Migrations: edit model → make dev-migrate-create MSG="..." → review → make dev-migrate
+  - Migrations: edit model → make migrate-create MSG="..." → review → make migrate → make up
   - API paths: root-level (/projects, /tasks) — NOT /api
   - Frontend: page → hook → lib/api.ts. No React Query.
-  - Tests: make dev-test must pass before a change is complete.
+  - Tests: make test must pass before a change is complete.
+  - Runtime: full Docker only — after code changes use make up (rebuild), not hot reload.
 
   Agent rules for implementation: AGENTS.md and CLAUDE.md at project root.
   SDD workshop: enrich minimal story with /enrich-story before /opsx:propose. Input: guide/user-story-task-dependencies.md. Output: guide/user-story-enriched.md.
@@ -45,6 +46,6 @@ rules:
   tasks:
     - First task: CodeGraph explore for the change area; list target files from graph output
     - Order tasks: model → migration → schemas → manager → controller → routes → lib/api → hooks → UI → tests
-    - Include explicit migration commands (make dev-migrate-create, make dev-migrate)
-    - Include make dev-test as final task
+    - Include explicit migration commands (make migrate-create, make migrate, make up)
+    - Include make test as final task
     - One checkbox per file or logical unit; use "- [ ]" format

@@ -35,7 +35,7 @@ Reload Cursor MCP after `codegraph init` (**Settings → MCP**). Config: `ai-age
     ↓
 /opsx:apply
     ↓
-make dev-test
+make test
     ↓
 /opsx:archive
     ↓

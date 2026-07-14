@@ -27,8 +27,9 @@ This is required to save tokens and get accurate call paths. See [codegraph.md](
 Never create migration files by hand. Always:
 
 ```bash
-make dev-migrate-create MSG="add task dependencies"
-make dev-migrate
+make migrate-create MSG="add task dependencies"
+make migrate
+make up
 ```
 
 ## Layer rules
@@ -40,14 +41,19 @@ make dev-migrate
 | Manager | Logic + DB | HTTP concerns |
 | Model | Schema definition | API shapes |
 
-## Quick commands
+## Quick commands (full Docker only)
 
 ```bash
-make dev              # Start (macOS/Linux)
-make dev-test         # Run all tests
+make up               # Start / rebuild stack
+make logs             # Follow logs after rebuild
+make test             # Run all tests in containers
+make migrate          # Apply migrations
+make reset            # Wipe DB volumes + rebuild
 codegraph explore <query>   # BEFORE reading code
 codegraph sync        # After edits
 ```
+
+After code changes: `make up && make logs`. See [guide/docker.md](guide/docker.md).
 
 ## SDD commands
 
