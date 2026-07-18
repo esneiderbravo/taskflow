@@ -5,7 +5,7 @@ MSG ?=
 help:
 	@echo "TaskFlow"
 	@echo ""
-	@echo "  make up                 Start/rebuild stack (postgres + backend + frontend)"
+	@echo "  make up                 Start/rebuild stack (taskflow_db + backend + frontend)"
 	@echo "  make down               Stop containers"
 	@echo "  make reset              Wipe DB volumes and rebuild stack"
 	@echo "  make logs               Follow container logs"
