@@ -55,7 +55,7 @@ export interface ListTasksParams {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
-function buildQuery(params: Record<string, string | number | undefined>): string {
+function buildQuery(params: object): string {
   const query = new URLSearchParams();
   for (const [key, value] of Object.entries(params)) {
     if (value !== undefined && value !== "") {
