@@ -6,7 +6,7 @@ Full-stack project and task manager for the **PyCon 2026** workshop. Next.js · 
 
 ## Quick start
 
-**Only requirement:** [Docker](https://docs.docker.com/get-docker/) running. The full stack (postgres + backend + frontend) runs in containers — no conda, Node, or Python install needed. Details: [guide/docker.md](guide/docker.md).
+**Only requirement:** [Docker](https://docs.docker.com/get-docker/) running. The full stack (taskflow_db + backend + frontend) runs in containers — no conda, Node, or Python install needed. Details: [guide/docker.md](guide/docker.md).
 
 **macOS / Linux**
 

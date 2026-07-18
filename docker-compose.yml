@@ -1,9 +1,9 @@
 name: taskflow
 
 services:
-  postgres:
+  taskflow_db:
     image: postgres:16-alpine
-    container_name: postgres
+    container_name: taskflow_db
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     environment:
@@ -25,10 +25,10 @@ services:
     ports:
       - "${BACKEND_PORT:-8000}:8000"
     depends_on:
-      postgres:
+      taskflow_db:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgresql://taskflow:taskflow@postgres:5432/taskflow
+      DATABASE_URL: postgresql://taskflow:taskflow@taskflow_db:5432/taskflow
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 5s
