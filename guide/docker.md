@@ -1,6 +1,6 @@
 # Docker (only supported way to run TaskFlow)
 
-The **entire stack** runs in containers: `db`, `backend`, and `frontend`.
+The **entire stack** runs in containers: `postgres`, `backend`, and `frontend`.
 
 No Python, Node.js, conda, or OS-specific app setup on your machine — only [Docker](https://docs.docker.com/get-docker/).
 
@@ -24,7 +24,7 @@ make up
 docker compose up --build -d
 ```
 
-First build ~90s. Expect three containers: `db`, `backend`, `frontend`.
+First build ~90s. Expect three containers: `postgres`, `backend`, `frontend`.
 
 ## URLs
 

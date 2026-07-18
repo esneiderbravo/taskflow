@@ -53,7 +53,7 @@ make up
 docker compose up --build -d
 ```
 
-This builds and starts `db`, `backend`, and `frontend` in containers (~90s first time).
+This builds and starts `postgres`, `backend`, and `frontend` in containers (~90s first time).
 
 ### 5. Verify it works
 
